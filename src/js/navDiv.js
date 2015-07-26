@@ -7,7 +7,7 @@ var React = require('react');
 var Icon = require('react-geomicons');
 var IconExample = React.createClass({
 	render: function(){
-		return <Icon name={this.props.name} width="60" height="60"/>
+		return <Icon name={this.props.name} width="30" height="30"/>
 	}
 });
 var navBarStyling = {
@@ -16,6 +16,17 @@ var navBarStyling = {
 
 };
 var NavigationDiv = React.createClass({
+	mixins: [ParseReact.Mixin], // Enable query subscriptions
+
+	observe: function() {
+		// Subscribe to all Comment objects, ordered by creation date
+		// The results will be available at this.data.comments
+		return {
+			posts: (new Parse.Query('Posts')),
+			tutors: (new Parse.Query('Tutors')),
+			
+		};
+	},
 	getInitialState: function()
 	{
 		return {showHome: true,
@@ -79,37 +90,37 @@ var NavigationDiv = React.createClass({
 		return (<div>
 			<button style={this.navBarStyling} onClick={this.showHomeTab}><IconExample name="home" /></button>
 			<button style={navBarStyling} onClick={this.showAboutTab}><IconExample name="info" /></button>
-			<button style={navBarStyling} onClick={this.showJoinTab}><IconExample name="user" /></button>
 			<button style={navBarStyling} onClick={this.showTutoringTab}><IconExample name="warning" /></button>
 			<button style={navBarStyling} onClick={this.showJobsTab}><IconExample name="heart" /></button>
-			<button style={navBarStyling} onClick={this.showTipsTab}><IconExample name="check" /></button>
 			<button style={navBarStyling} onClick={this.showProjectsTab}><IconExample name="github" /></button>
-			{ this.state.showHome ? <HomeDisplay /> : null }
+			<button style={navBarStyling} onClick={this.showTipsTab}><IconExample name="check" /></button>
+			{ this.state.showHome ? <HomeDisplay posts={this.data.posts} /> : null }
 			{ this.state.showAbout ? <AboutDisplay /> : null }
-			{ this.state.showJoin ? <JoinDisplay /> : null }
-			{ this.state.showTutoring ? <TutoringDisplay /> : null }
-			{ this.state.showJobs ? <JobsDisplay /> : null }
-			{ this.state.showTips ? <TipsDisplay /> : null }
-			{ this.state.showProjects ? <ProjectsDisplay /> : null }
+			{ this.state.showTutoring ? <TutoringDisplay tutors={this.data.tutors} /> : null }
+			{ this.state.showJobs ? <JobsDisplay posts={this.data.posts} /> : null }
+			{ this.state.showTips ? <TipsDisplay posts={this.data.posts} /> : null }
+			{ this.state.showProjects ? <ProjectsDisplay posts={this.data.posts} /> : null }
 			</div>);
 
 	}
 });
+//////////////////////////////////////END NAVIGATION DIV
+
+
+
+
+
+
+
 
 var postDisplayStyle = {
-	maxWidth : 450,
+	maxWidth : 350,
 	border: 6
 };
-var HomeDisplay = React.createClass({
-	mixins: [ParseReact.Mixin], // Enable query subscriptions
 
-	observe: function() {
-		// Subscribe to all Comment objects, ordered by creation date
-		// The results will be available at this.data.comments
-		return {
-			posts: (new Parse.Query('Posts'))
-		};
-	},
+
+var HomeDisplay = React.createClass({
+	
 	getInitialState: function() {
 		return { show: false };
 	},
@@ -117,12 +128,16 @@ var HomeDisplay = React.createClass({
 	{
 		return (
 			<ul>
-                        {this.data.posts.map(function(c) {
-	                        return(
-		                        <div style={postDisplayStyle}>
-			                        <img src={c.image.url()} />
-		                                <li>{c.title}</li>
-	                                </div>);
+                        {this.props.posts.map(function(post) 
+                        	{
+                        		if(post.isPinned == true)
+                        		{
+			                        return(
+				                        <div style={postDisplayStyle}>
+					                        <img src={post.image.url()} />
+				                                <li>{post.title}</li>
+			                                </div>);
+	                    		}
                         })}
 			</ul>
 		);
@@ -147,12 +162,26 @@ var JoinDisplay = React.createClass({
 	}
 });
 var TutoringDisplay = React.createClass({
+	
 	getInitialState: function() {
 		return { show: false };
 	},
 	render:function()
 	{
-		return <h1>Tutoring</h1>;
+		return (
+			<ul>
+                        {this.props.tutors.map(function(tutor) 
+                        	{
+                        		
+			                        return(
+				                        <div style={postDisplayStyle}>
+					                        <img src={tutor.image.url()} />
+				                                <li>{tutor.firstName} {tutor.lastName}</li>
+			                            </div>);
+	                    		
+                        })}
+			</ul>
+		);
 	}
 });
 var JobsDisplay = React.createClass({
@@ -161,7 +190,22 @@ var JobsDisplay = React.createClass({
 	},
 	render:function()
 	{
-		return <h1>Jobs</h1>;
+		return (
+			<ul>
+                        {this.props.posts.map(function(post) 
+                        	{
+                        		if(post.isJob == true )
+                        		{
+			                        return(
+				                        <div style={postDisplayStyle}>
+
+					                        <img src={post.image.url()} />
+				                                <li>{post.title}</li>
+			                                </div>);
+	                    		}
+                        })}
+			</ul>
+		);
 	}
 });
 var TipsDisplay = React.createClass({
@@ -170,7 +214,22 @@ var TipsDisplay = React.createClass({
 	},
 	render:function()
 	{
-		return <h1>Tips</h1>;
+		return (
+			<ul>
+                        {this.props.posts.map(function(post) 
+                        	{
+                        		if(post.isUsefulPost == true )
+                        		{
+			                        return(
+				                        <div style={postDisplayStyle}>
+				                        	
+					                        <img src={post.image.url()} />
+				                                <li>{post.title}</li>
+			                                </div>);
+	                    		}
+                        })}
+			</ul>
+		);
 	}
 });
 var ProjectsDisplay = React.createClass({
@@ -179,7 +238,22 @@ var ProjectsDisplay = React.createClass({
 	},
 	render:function()
 	{
-		return <h1>Projects</h1>;
+		return (
+			<ul>
+                        {this.props.posts.map(function(post) 
+                        	{
+                        		if(post.isProject == true )
+                        		{
+			                        return(
+				                        <div style={postDisplayStyle}>
+				                        	
+					                        <img src={post.image.url()} />
+				                                <li>{post.title}</li>
+			                                </div>);
+	                    		}
+                        })}
+			</ul>
+		);
 	}
 });
 
