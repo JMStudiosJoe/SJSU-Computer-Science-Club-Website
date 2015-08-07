@@ -5,14 +5,29 @@
 //
 var React = require('react');
 var Icon = require('react-geomicons');
+// 
 var IconExample = React.createClass({
 	render: function(){
 		return <Icon name={this.props.name} width="30" height="30"/>
 	}
 });
+var contentPositioning = {
+	 "padding-top" : "15%",
+	 "padding-left" : "10%",
+	 backgroundImage : "url('../img/EDITBackground.jpg')"
+};
+//backgroundImage: 'url(' + imgUrl + ')'
+var postDisplayStyle = {
+	maxWidth : 450,
+	border : 6,
+	padding :60,
+	margin : 60,
+	backgroundColor: 'white',
+	"box-shadow" : "6px 6px 6px"
+};
 var navBarStyling = {
-	paddingLeft: 30,
-	paddingRight: 30
+	marginLeft: 10,
+	marginRight: 10
 
 };
 var NavigationDiv = React.createClass({
@@ -87,8 +102,8 @@ var NavigationDiv = React.createClass({
 	render:function()
 	{
 
-		return (<div>
-			<button style={this.navBarStyling} onClick={this.showHomeTab}><IconExample name="home" /></button>
+		return (<div style={contentPositioning}>
+			<button style={navBarStyling} onClick={this.showHomeTab}><IconExample name="home" /></button>
 			<button style={navBarStyling} onClick={this.showAboutTab}><IconExample name="info" /></button>
 			<button style={navBarStyling} onClick={this.showTutoringTab}><IconExample name="warning" /></button>
 			<button style={navBarStyling} onClick={this.showJobsTab}><IconExample name="heart" /></button>
@@ -107,18 +122,6 @@ var NavigationDiv = React.createClass({
 //////////////////////////////////////END NAVIGATION DIV
 
 
-
-
-
-
-
-
-var postDisplayStyle = {
-	maxWidth : 350,
-	border: 6
-};
-
-
 var HomeDisplay = React.createClass({
 	
 	getInitialState: function() {
@@ -134,12 +137,21 @@ var HomeDisplay = React.createClass({
                         		{
 			                        return(
 				                        <div style={postDisplayStyle}>
+				                        	<li><h3>{post.title}</h3></li>
 					                        <img src={post.image.url()} />
-				                                <li>{post.title}</li>
-			                                </div>);
+					                        
+				                            <br />
+				                            <br />
+				                            <br />
+				                            <hr />
+				                            <span>{post.body}</span>
+				                            <hr />
+				                            
+			                            </div>);
 	                    		}
                         })}
 			</ul>
+
 		);
 	}
 });

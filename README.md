@@ -6,6 +6,7 @@ SJSU Computer Science Club Website
 	Ruby
 
 	```curl --silent --location https://deb.nodesource.com/setup_0.12 | sudo bash -```
+	
 	Mac/Unix
 
 	```brew install node```
@@ -28,5 +29,10 @@ SJSU Computer Science Club Website
 4. Run gulp watch
 	
 	```gulp watch```
-	
+
+	If ```gulp command not found``` error then your node package names might be mixed up such as node with nodejs
+
+	try running 
+	```sudo ln -s /usr/bin/nodejs /usr/bin/node```
+
 5. Navigate into /dist folder and open index.html
