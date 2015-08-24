@@ -18,14 +18,20 @@ var contentPositioning = {
 	 "background-position-x": "-10%",
 	 "background-repeat": "no-repeat"
 };
-//backgroundImage: 'url(' + imgUrl + ')'
+var imageDefaultStyle = {
+	"max-width" : "100%",
+	"max-height" : "100%",
+	padding : 10,
+	margin : 6
+};
 var postDisplayStyle = {
-	maxWidth : 400,
+	maxWidth : 600,
 	border : 6,
-	padding :60,
-	margin : 60,
+	padding :30,
+	margin : 30,
 	backgroundColor: 'white',
-	"box-shadow" : "6px 6px 36px"
+	"box-shadow" : "6px 6px 36px",
+	fontFamily : "Arial"
 };
 var navBarStyling = {
 	marginLeft: 10,
@@ -39,7 +45,7 @@ var NavigationDiv = React.createClass({
 		// Subscribe to all Comment objects, ordered by creation date
 		// The results will be available at this.data.comments
 		return {
-			posts: (new Parse.Query('Posts')),
+			posts: (new Parse.Query('Posts')).ascending("displayOrder"),
 			tutors: (new Parse.Query('Tutors')),
 			
 		};
@@ -198,7 +204,7 @@ var HomeDisplay = React.createClass({
 			                        return(
 				                        <div style={postDisplayStyle}>
 				                        	<li><h3>{post.title}</h3></li>
-					                        <img src={post.image.url()} />
+					                        <img style={imageDefaultStyle} src={post.image.url()} />
 					                        
 				                            <br />
 				                            <hr />
@@ -396,7 +402,7 @@ var ProjectsDisplay = React.createClass({
 
             	<h1>Ongoing Student Projects</h1>
                 <hr />
-                <span>These are student oriented projects meant to be open source, coding experience and networking.</span>
+                <span>These are student oriented projects meant to be open source, coding experience and networking.	</span>
                 <br />
                 <hr />
         
