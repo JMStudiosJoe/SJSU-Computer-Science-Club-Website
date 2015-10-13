@@ -1,0 +1,59 @@
+a, .card .card-action a {
+    text-transform: none;
+}
+
+#logo {
+    margin: 4% 0;
+    -webkit-filter: drop-shadow(0px 0px 10px #333);
+    filter: drop-shadow(0px 0px 10px #333);
+}
+
+#tabsnav {
+    margin-bottom: 4%;
+    padding: 0;
+}
+
+.tabs .tab a {
+    color: #40418f;
+    font-size: 1.25em;
+}
+
+.tabs .tab a:hover {
+    color: #40418f; /*#d2a829;*/
+}
+
+.tab {
+    -webkit-transition: all .5s;
+    transition: all .5s;
+}
+
+.tab:hover {
+    background-color: #E0C269;
+}
+
+.tabs .indicator {
+    background-color: #6667A5;
+}
+
+#footer {
+    background-color: #2f3045;
+    margin-top: 15%;
+}
+
+#container {
+    z-index: 1;
+    position: relative;
+    display: block;
+}
+
+canvas {
+    vertical-align: middle;
+    display: block;
+    z-index: 0;
+    position: fixed;
+    top: 0;
+}
+
+#pink {
+    color: #ff4081;
+}

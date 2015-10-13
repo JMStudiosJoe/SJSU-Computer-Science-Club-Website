@@ -1,30 +1,310 @@
 <!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html > <!--<![endif]-->
 <html>
-<head lang="en">
-	<meta charset="UTF-8">
-	<title>SJSU CS Club</title>
-	<!--<script src="http://fb.me/react-0.13.1.min.js"></script>-->
-	<script src="https://www.parsecdn.com/js/parse-latest.js"></script>
-	<!-- Now include parse-react.js -->
-	<script src="https://www.parsecdn.com/js/parse-react.js"></script>
-
-
-	<script>
-		//Initialize Parse
-		Parse.initialize("05WHW6H1QMXh3LvET609KcoPGkDJC0jX5dQXx3fg", "DHOSlsNvtKy98lgrl3ixYFnkvfVWiNcVVTyjft00");
-	</script>
+<head>
+    <script src="https://fb.me/react-0.13.3.min.js"></script>
+    <script src="https://www.parsecdn.com/js/parse-latest.js" type="text/javascript"></script>
+    <script src="https://www.parsecdn.com/js/parse-react.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <meta charset = "utf-8" name = "viewport" content = "width=device-width, initial-scale=1, user-scalable=no">
+    <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+    <title>SJSU CS Club</title>
+    <link rel = "shortcut icon" href = "img/myIcon.ico" type = "image/x-icon" title = "MV Hacks">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link rel = "stylesheet" href = "css/normalize.css">
+    <link rel = "stylesheet" href = "css/main.css">
+    
 </head>
+<!--
+Features:
+* Forum with Rules
+* Commenting on posts with rules, Disqus?
+* Rename MISC
+
+Design:
+* Zoom Out
+-->
+
 <body>
-	<div id="navigation"></div>
+<canvas id="draw"></canvas>
+<div id="container">
+    <div class="fixed-action-btn tooltipped" data-position="left" data-delay="10" data-tooltip="Back to Top" id="scrolltotop" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large waves-effect waves-light blue darken-4">
+            <i class="large material-icons">navigation</i>
+        </a>
+    </div>
+    <div class="row">
+        <div class="col s6 offset-s3">
+            <img id="logo" class="center-align responsive-img" src="img/logo.png">
+        </div>
+    </div>
 
-	
-	<div id="mainDisplay"></div>
+    <div class="container center-align">
+        <div class="row">
+            <div id="tabsnav" class="z-depth-3 col s12">
+                <ul class="tabs">
+                    <li class="tab col s2"><a class="active" href="#home">Home</a></li>
+                    <li class="tab col s2"><a href="#About">About</a></li>
+                    <li class="tab col s2"><a href="#Tutoring">Tutoring</a></li>
+                    <li class="tab col s2"><a href="#Jobs">Jobs</a></li>
+                    <li class="tab col s2"><a href="#Projects">Projects</a></li>
+                    <li class="tab col s2"><a href="#Misc">Misc</a></li>
+                </ul>
+            </div>
+            <div id="home" class="col s8 offset-s2">
+                <h1>hello joey</h1> 
+                <!--
+                <div class="z-depth-4 card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img src="img/home/event1.png">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title grey-text text-darken-4"><h4>HackingEDU &amp; SJSU Info Session</h4><h6 class="right">Sept 17, 2015</h6></span>
+                        <h5>Duncan Hall 318 at 5PM</h5>
+                    </div>
+                    <div class="card-action">
+                        <p class="flow-text">HackingEDU coming to SJSU to discuss the upcoming Hackathon and Jobs within the company.</p>
+                    </div>
+                </div>
 
 
-	<!--TODO: browserify-->
-	
-	
 
-	<script src="src/build.js"></script>
+
+
+
+                <br><br>
+                <div class="z-depth-4 card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img src="img/home/event2.png">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title grey-text text-darken-4"><h4>Kaiser Permanente Info Session</h4><h6 class="right">Sept 24, 2015</h6></span>
+                        <h5>BBC 204 at 7PM</h5>
+                    </div>
+                    <div class="card-action">
+                        <p class="flow-text">Kaiser Permanente will be here at SJSU discussing internship opportunities and full time rotational programs. Employees from Cyber Security, CTO Rotational Program and others within KP IT. FOOD WILL BE PROVIDED!</p>
+                    </div>
+                </div>
+                <br><br>
+                <div class="z-depth-4 card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img src="img/home/event3.png">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title grey-text text-darken-4"><h4>Science and Engineering Career Fair</h4><h6 class="right">Sept 30, 2015</h6></span>
+                        <h5>12-4PM at the Event Center</h5>
+                    </div>
+                    <div class="card-action">
+                        <p class="flow-text">Learn more: <a href="http://www.sjsu.edu/careercenter/students/videos_workshops_and_handouts/job-fair-success-webshop/">Video</a></p>
+                    </div>
+                </div>
+                <br><br>
+                <div class="z-depth-4 card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img src="img/home/event4.png">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title grey-text text-darken-4"><h4>PayPal Opportunity Hack</h4><h6 class="right">Oct 2-3, 2015</h6></span>
+                        <h5>2211 North First Street</h5>
+                    </div>
+                    <div class="card-action">
+                        <p class="flow-text">PayPal Hackathon at Paypal in San Jose, learn more: <a href="http://opportunity-hack-2015-san-jose.devpost.com/">Here</a></p>
+                    </div>
+                </div>
+                -->
+            </div>
+            <div id="About" class="col s8 offset-s2">
+                <div class="z-depth-4 card">
+                    <div class="card-content">
+                        <span class="card-title grey-text text-darken-4"><h4>About</h4></span>
+                    </div>
+                    <div class="card-action">
+                        <p class="flow-text">Welcome, the SJSU Computer Science club is available for students to unwind, grab a bite to eat and study.</p>
+                    </div>
+                </div>
+                <br><br>
+                <div class="z-depth-4 card">
+                    <div class="card-content">
+                        <span class="card-title grey-text text-darken-4"><h4>Our Goals</h4></span>
+                    </div>
+                    <div class="card-action">
+                        <p class="flow-text">We plan on hosting events for students to gain realy world experience, in a variety of ways.</p>
+                        <ul class="collection">
+                            <li class="collection-item">Hacker Rank Computer Science related problems.</li>
+                            <li class="collection-item">Team oriented student projects.</li>
+                            <li class="collection-item">SJSU Algorithms practice group.</li>
+                        </ul>
+                    </div>
+                </div>
+                <br><br>
+                <div class="z-depth-4 card">
+                    <div class="card-content">
+                        <span class="card-title grey-text text-darken-4"><h4>Join</h4></span>
+                    </div>
+                    <div class="card-action">
+                        <p class="flow-text">Joining is easy, just speak to an officer and best of all its free!</p>
+                    </div>
+                </div>
+                <br><br>
+                <div class="z-depth-4 card">
+                    <div class="card-content">
+                        <span class="card-title grey-text text-darken-4"><h4>Rules</h4></span>
+                    </div>
+                    <div class="card-action">
+                        <ul class="collection">
+                            <li class="collection-item">No throwing objects.</li>
+                            <li class="collection-item">No form of abuse.</li>
+                            <li class="collection-item">If open seat capacity is less than 5 seats, no GAMING except on safa areas.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="Tutoring" class="col s8 offset-s2">
+                <div class="z-depth-4 card">
+                    <div class="card-content">
+                        <span class="card-title grey-text text-darken-4"><h4>Tutoring</h4></span>
+                    </div>
+                    <div class="card-action">
+                        <p class="flow-text">
+                            Tutoring is FREE for students!
+                            <br>
+                            Now Hiring!
+                            <br>
+                            Talk to Matthew Pleva and send your resume to matthew.pleva@sjsu.edu.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div id="Jobs" class="col s8 offset-s2">
+                <div class="z-depth-4 card">
+                    <div class="card-content">
+                        <span class="card-title grey-text text-darken-4"><h4>Job Postings</h4></span>
+                        <h5>All postings are paid in US Dollars ($).</h5>
+                    </div>
+                    <div class="card-action">
+                        <p class="flow-text">If you would you like to announce a job posting please contact a club officer.</p>
+                        <p class="flow-text">Create a LinkedIn profile and fill in as much information as you can.</p>
+                        <p class="flow-text">Update your Github account with current projects, make sure they work, and try to have a constant stream of green on your status.</p>
+                    </div>
+                </div>
+            </div>
+            <div id="Projects" class="col s8 offset-s2">
+                <div class="z-depth-4 card">
+                    <div class="card-content">
+                        <span class="card-title grey-text text-darken-4"><h4>Ongoing Student Projects</h4></span>
+                    </div>
+                    <div class="card-action">
+                        <p class="flow-text">These are student oriented projects meant to be open source, coding experience and networking.</p>
+                    </div>
+                </div>
+                <br><br>
+                <div class="z-depth-4 card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img src="img/projects/CoursePlanningTool.png">
+                    </div>
+                </div>
+                <br><br>
+                <div class="z-depth-4 card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img src="img/projects/FrisbeeGolf.png">
+                    </div>
+                </div>
+                <br><br>
+                <div class="z-depth-4 card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img src="img/projects/PublicTransportation.png">
+                    </div>
+                </div>
+                <br><br>
+                <div class="z-depth-4 card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img src="img/projects/SmartHelmetLight.png">
+                    </div>
+                </div>
+            </div>
+            <div id="Misc" class="col s8 offset-s2">
+                <div class="z-depth-4 card">
+                    <div class="card-content">
+                        <span class="card-title grey-text text-darken-4"><h4>Useful Info</h4></span>
+                    </div>
+                    <div class="card-action">
+                        <p class="flow-text">Here is some useful information we thought students might enjoy.</p>
+                    </div>
+                </div>
+                <br><br>
+                <div class="z-depth-4 card">
+                    <div class="card-content">
+                        <span class="card-title grey-text text-darken-4"><h4>Tutorials</h4></span>
+                    </div>
+                    <div class="card-action">
+                        <ul class="collection">
+                            <li class="collection-item"><a href="https://www.thenewboston.com/">TheNewBoston</a></li>
+                            <li class="collection-item"><a href="https://www.sjpl.org/treehouseaccount">TeamTreeHouse</a></li>
+                            <li class="collection-item"><a href="http://codingbat.com/">CodingBat</a></li>
+                            <li class="collection-item"><a href="http://www.freecodecamp.com/">FreeCodeCamp</a></li>
+                            <li class="collection-item"><a href="https://www.codecademy.com/">CodeAcademy</a></li>
+                            <li class="collection-item"><a href="https://www.codeschool.com/">CodeSchool</a></li>
+                            <li class="collection-item"><a href="https://www.bento.io/">Bento</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <br><br>
+                <div class="z-depth-4 card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img src="img/misc/github.png">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title grey-text text-darken-4"><h4>Git Workshop</h4></span>
+                    </div>
+                    <div class="card-action">
+                        <p class="flow-text">How to use github workshops: <a href="https://www.youtube.com/watch?v=UlWBMosOimk">Video</a></p>
+                    </div>
+                </div>
+                <br><br>
+                <div class="z-depth-4 card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img src="img/misc/xcode.png">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title grey-text text-darken-4"><h4>iOS Workshop</h4></span>
+                    </div>
+                    <div class="card-action">
+                        <p class="flow-text">iOS workshop video: <a href="https://www.youtube.com/watch?v=jfzRjUx6tmU">Video</a></p>
+                    </div>
+                </div>
+                <br><br>
+                <div class="z-depth-4 card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img src="img/misc/studentpack.png">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title grey-text text-darken-4"><h4>Student Developer Pack</h4></span>
+                    </div>
+                    <div class="card-action">
+                        <p class="flow-text"><a href="https://education.github.com/pack">Github Student Pack</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s4 offset-s4">
+                <div class="card-panel z-depth-3" id="footer">
+                    <span class="white-text">© 2015 SJSU Computer Science</span>
+                    <br>
+                    <a id="pink" href="http://odutta.me" target="_blank">Made with &#x2764; by Oindril Dutta</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="./src/js/materialize.min.js"></script>
+
+<script type="text/javascript" src="./src/js/main.js"></script>
+<script type="text/jsx" src="src/js/App.js"></script>
+
+<script type="text/jsx" src="src/js/navDiv.js"></script>
 </body>
 </html>

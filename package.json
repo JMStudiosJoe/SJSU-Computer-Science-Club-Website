@@ -34,6 +34,7 @@
     "gulp": "^3.9.0",
     "gulp-concat": "^2.5.2",
     "gulp-debug": "^2.0.1",
+    "react": "^0.13.3",
     "gulp-html-replace": "^1.4.5",
     "gulp-react": "^3.0.1",
     "gulp-streamify": "0.0.5",
