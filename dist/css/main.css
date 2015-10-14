@@ -9,7 +9,6 @@ a, .card .card-action a {
 }
 
 #tabsnav {
-    margin-bottom: 4%;
     padding: 0;
 }
 
@@ -56,4 +55,12 @@ canvas {
 
 #pink {
     color: #ff4081;
+}
+
+.margintop {
+    margin-top: 40px;
+}
+
+#hidden {
+    display: none;
 }

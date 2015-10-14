@@ -1,65 +1,84 @@
-/**
- * Created by josephrichardson on 4/29/15.
- */
-
-//
 var React = require('react');
-var Parse = require('parse');
-var ParseReact = require('parse-react');
-
-// 
+var filt = "";
+var newTutors = [];
 
 var NavigationDiv = React.createClass({
-	mixins: [ParseReact.Mixin], // Enable query subscriptions
-
-	observe: function(props, state) {
-		// Subscribe to all Comment objects, ordered by creation date
-		// The results will be available at this.data.comments
-		return {
-			posts: (new Parse.Query('Posts')).ascending("displayOrder"),
-			tutors: (new Parse.Query('Tutors')),
-			
-		};
-	},
-	getInitialState: function()
-	{
-		return {
-		};
-	},
-	render:function()
-	{
-
-			return (<h1>FUCK YOU</h1>);
-		// return (<ul>
-
-		// 	{this.data.posts.map(function(post) {
-  //                       return (
-  //                           <div class="z-depth-4 card">
-  //                               <div class="card-image waves-effect waves-block waves-light">
-  //                                   <img src={post.image.url()} />
-  //                               </div>
-  //                               <div class="card-content">
-  //                                   <span class="card-title grey-text text-darken-4"><h4>{post.title}</h4>
-  //                                   //if()
-  //                                       //<h6 class="right">Sept 17, 2015</h6>
-  //                                   </span>
-  //                               //<h5>{post.summary}</h5>
-  //                               </div>
-  //                               <div class="card-action">
-  //                                   <p class="flow-text">HackingEDU coming to SJSU to discuss the upcoming Hackathon and Jobs within the company.</p>
-  //                               </div>
-  //                           </div>
-  //                           );
-  //                   }
-  //               )}
-		// 	</ul>);
-
-	}
+    mixins: [ParseReact.Mixin],
+    observe: function() {
+        return {
+            posts: (new Parse.Query('Posts')).ascending("displayOrder"),
+            tutors: (new Parse.Query('Tutors'))
+        };
+    },
+    render:function()
+    {
+        var newPosts = [];
+        return (
+            <div>
+                <p id={"hidden"}>{filt = this.props.filter}</p>
+                <p id={"hidden"}>{newTutors = this.data.tutors}</p>
+                {this.data.posts.map(function(post) {
+                    if(filt == "isPinned" && post.isPinned == true)
+                    {
+                        newPosts.push(post)
+                    }
+                    else if(filt == "isTutor")
+                    {
+                        newPosts = newTutors;
+                    }
+                    else if(filt == "isJob" && post.isJob == true)
+                    {
+                        newPosts.push(post);
+                    }
+                    else if(filt == "isProject" && post.isProject == true)
+                    {
+                        newPosts.push(post);
+                    }
+                    else if(filt == "isUsefulPost" && post.isUsefulPost == true)
+                    {
+                        newPosts.push(post);
+                    }
+                })}
+                {<HomeDisplay posts = {newPosts}/>}
+            </div>
+        );
+    }
 });
-//////////////////////////////////////END NAVIGATION DIV
 
+var HomeDisplay = React.createClass({
+    render:function()
+    {
+        return (
+            <div>
+                {this.props.posts.map(function(post) {
+                    return (
+                        <div>
+                            <br />
+                            <div className={"z-depth-4 card margintop"}>
+                                <div className={"card-image waves-effect waves-block waves-light"}>
+                                    <img src={post.image.url()} />
+                                </div>
+                                <div className={"card-content"}>
+                                    <span className={"card-title grey-text text-darken-4"}>
+                                        <h4>{post.title}</h4>
+                                        <h6 className={"right"}>{post.date}</h6>
+                                    </span>
+                                    <h5>{post.summary}</h5>
+                                </div>
+                                <div className={"card-action"}>
+                                    <p className={"flow-text"}>{post.body}</p>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    }
+});
 
-
-React.render(<NavigationDiv />, document.getElementById('home'));
-
-module.exports = NavigationDiv;
+React.render(<NavigationDiv filter = "isPinned" />, document.getElementById('Home'));
+React.render(<NavigationDiv filter = "isTutor" />, document.getElementById('Tutors'));
+React.render(<NavigationDiv filter = "isJob" />, document.getElementById('Jobs'));
+React.render(<NavigationDiv filter = "isProject" />, document.getElementById('Projects'));
+React.render(<NavigationDiv filter = "isUsefulPost" />, document.getElementById('Miscs'));
