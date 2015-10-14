@@ -18,6 +18,43 @@ window.onscroll = function () {
         $("#tabsnav").removeAttr("style");
 };
 
+function widthChanges() {
+    if ($(window).width() < 400) {
+        $(".majortab").each(function(index) {
+            $(this).attr('class', "majortab col s12");
+        });
+        $("#innerContainer").removeClass("container");
+        $("#logoimage").attr('class', "col s12");
+        $("#foot").attr('class', "col s6 offset-s3");
+    } else if ($(window).width() < 600) {
+        $(".majortab").each(function(index) {
+            $(this).attr('class', "majortab col s10 offset-s1");
+        });
+        $("#innerContainer").removeClass("container");
+        $("#logoimage").attr('class', "col s10 offset-s1");
+        $("#foot").attr('class', "col s6 offset-s3");
+    } else if ($(window).width() < 900) {
+        $(".majortab").each(function(index) {
+            $(this).attr('class', "majortab col s10 offset-s1");
+        });
+        $("#innerContainer").removeClass("container");
+        $("#logoimage").attr('class', "col s8 offset-s2");
+        $("#foot").attr('class', "col s4 offset-s4");
+    } else {
+        $(".majortab").each(function(index) {
+            $(this).attr('class', "majortab col s8 offset-s2");
+        });
+        $("#innerContainer").addClass("container");
+        $("#logoimage").attr('class', "col s6 offset-s3");
+        $("#foot").attr('class', "col s4 offset-s4");
+    }
+}
+
+widthChanges();
+$(window).resize(function() {
+    widthChanges();
+});
+
 setInterval(function() {
     $(".card-image").each(function(index) {
         if($(this).children('img').attr("src").indexOf("NoImageAvailalbe") > -1)
