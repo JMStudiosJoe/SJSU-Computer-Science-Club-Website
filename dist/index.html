@@ -13,6 +13,7 @@
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
     <link rel = "stylesheet" href = "css/normalize.css">
     <link rel = "stylesheet" href = "css/main.css">
+    <link rel = "stylesheet" href = "css/responsive.css">
 </head>
 <!--
 Features:
@@ -26,30 +27,30 @@ Design:
 <body>
 <canvas id="draw"></canvas>
 <div id="container">
-    <div class="fixed-action-btn tooltipped" data-position="left" data-delay="10" data-tooltip="Back to Top" id="scrolltotop" style="bottom: 45px; right: 24px;">
+    <div onclick="up('slow')" class="fixed-action-btn tooltipped" data-position="left" data-delay="10" data-tooltip="Back to Top" id="scrolltotop" style="bottom: 45px; right: 24px;">
         <a class="btn-floating btn-large waves-effect waves-light blue darken-4">
             <i class="large material-icons">navigation</i>
         </a>
     </div>
     <div class="row">
-        <div class="col s6 offset-s3">
+        <div id="logoimage" class="col s6 offset-s3">
             <img id="logo" class="center-align responsive-img" src="img/logo.png">
         </div>
     </div>
-    <div class="container center-align">
+    <div id="innerContainer" class="container center-align">
         <div class="row">
             <div id="tabsnav" class="z-depth-3 col s12">
                 <ul class="tabs">
-                    <li class="tab col s2"><a class="active" href="#Home">Home</a></li>
-                    <li class="tab col s2"><a href="#About">About</a></li>
-                    <li class="tab col s2"><a href="#Tutoring">Tutoring</a></li>
-                    <li class="tab col s2"><a href="#Jobs">Jobs</a></li>
-                    <li class="tab col s2"><a href="#Projects">Projects</a></li>
-                    <li class="tab col s2"><a href="#Misc">Misc</a></li>
+                    <li class="tab col s2" onclick="up('fast')"><a class="active" href="#Home">Home</a></li>
+                    <li class="tab col s2" onclick="up('fast')"><a href="#About">About</a></li>
+                    <li class="tab col s2" onclick="up('fast')"><a href="#Tutoring">Tutoring</a></li>
+                    <li class="tab col s2" onclick="up('fast')"><a href="#Jobs">Jobs</a></li>
+                    <li class="tab col s2" onclick="up('fast')"><a href="#Projects">Projects</a></li>
+                    <li class="tab col s2" onclick="up('fast')"><a href="#Misc">Misc</a></li>
                 </ul>
             </div>
-            <div id="Home" class="col s8 offset-s2"></div>
-            <div id="About" class="col s8 offset-s2">
+            <div id="Home" class="majortab col s8 offset-s2"></div>
+            <div id="About" class="majortab col s8 offset-s2">
                 <br><br>
                 <div class="z-depth-4 card">
                     <div class="card-content">
@@ -96,7 +97,7 @@ Design:
                     </div>
                 </div>
             </div>
-            <div id="Tutoring" class="col s8 offset-s2">
+            <div id="Tutoring" class="majortab col s8 offset-s2">
                 <br><br>
                 <div class="z-depth-4 card">
                     <div class="card-content">
@@ -105,17 +106,19 @@ Design:
                     <div class="card-action">
                         <p class="flow-text">
                             Tutoring is FREE for students!
-                            <br>
+                            <br><br>
                             Now Hiring!
-                            <br>
+                            <br><br>
                             Talk to Matthew Pleva and send your resume to matthew.pleva@sjsu.edu.
+                            <br><br>
+                            Below is a list of the current tutors:
                         </p>
                     </div>
                 </div>
                 <div id="Tutors">
                 </div>
             </div>
-            <div id="Jobs" class="col s8 offset-s2">
+            <div id="Jobs" class="majortab col s8 offset-s2">
                 <div class="z-depth-4 card">
                     <div class="card-content">
                         <span class="card-title grey-text text-darken-4"><h4>Job Postings</h4></span>
@@ -130,8 +133,8 @@ Design:
                 <div id="job">
                 </div>
             </div>
-            <div id="Projects" class="col s8 offset-s2"></div>
-            <div id="Misc" class="col s8 offset-s2">
+            <div id="Projects" class="majortab col s8 offset-s2"></div>
+            <div id="Misc" class="majortab col s8 offset-s2">
                 <br><br>
                 <div class="z-depth-4 card">
                     <div class="card-content">
@@ -197,7 +200,7 @@ Design:
                 <div id="Miscs">
                 </div>
             </div>
-            <div class="col s4 offset-s4">
+            <div id="foot" class="col s4 offset-s4">
                 <div class="card-panel z-depth-3" id="footer">
                     <span class="white-text">© 2015 SJSU Computer Science</span><br>
                     <a id="pink" href="http://odutta.me" target="_blank">Made with &#x2764; by Oindril Dutta</a>

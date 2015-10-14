@@ -1,13 +1,8 @@
-function up (speed) {
-    $("html, body").animate({ scrollTop: 0 }, speed);
-    setOffset();
-}
+$("#scrolltotop").click(function() {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+});
 
-function setOffset() {
-    var off = $("#tabsnav").offset().top;
-    if (off != 0)
-        offset = off;
-}
+var offset = $("#tabsnav").offset().top;
 
 window.onscroll = function () {
     if ($(window).scrollTop() > offset)
@@ -58,9 +53,7 @@ function widthChanges() {
 widthChanges();
 $(window).resize(function() {
     widthChanges();
-    up("fast");
 });
-setOffset();
 
 setInterval(function() {
     $(".card-image").each(function(index) {
