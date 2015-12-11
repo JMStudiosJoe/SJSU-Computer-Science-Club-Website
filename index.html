@@ -27,7 +27,7 @@ Design:
 <body>
 <canvas id="draw"></canvas>
 <div id="container">
-    <div onclick="up('slow')" class="fixed-action-btn tooltipped" data-position="left" data-delay="10" data-tooltip="Back to Top" id="scrolltotop" style="bottom: 45px; right: 24px;">
+    <div class="fixed-action-btn tooltipped" data-position="left" data-delay="10" data-tooltip="Back to Top" id="scrolltotop" style="bottom: 45px; right: 24px;">
         <a class="btn-floating btn-large waves-effect waves-light blue darken-4">
             <i class="large material-icons">navigation</i>
         </a>
@@ -41,12 +41,12 @@ Design:
         <div class="row">
             <div id="tabsnav" class="z-depth-3 col s12">
                 <ul class="tabs">
-                    <li class="tab col s2" onclick="up('fast')"><a class="active" href="#Home">Home</a></li>
-                    <li class="tab col s2" onclick="up('fast')"><a href="#About">About</a></li>
-                    <li class="tab col s2" onclick="up('fast')"><a href="#Tutoring">Tutoring</a></li>
-                    <li class="tab col s2" onclick="up('fast')"><a href="#Jobs">Jobs</a></li>
-                    <li class="tab col s2" onclick="up('fast')"><a href="#Projects">Projects</a></li>
-                    <li class="tab col s2" onclick="up('fast')"><a href="#Misc">Misc</a></li>
+                    <li class="tab col s2 scrolltotop"><a class="active" href="#Home">Home</a></li>
+                    <li class="tab col s2 scrolltotop"><a href="#About">About</a></li>
+                    <li class="tab col s2 scrolltotop"><a href="#Tutoring">Tutoring</a></li>
+                    <li class="tab col s2 scrolltotop"><a href="#Jobs">Jobs</a></li>
+                    <li class="tab col s2 scrolltotop"><a href="#Projects">Projects</a></li>
+                    <li class="tab col s2 scrolltotop"><a href="#Misc">Misc</a></li>
                 </ul>
             </div>
             <div id="Home" class="majortab col s8 offset-s2"></div>
@@ -106,12 +106,10 @@ Design:
                     <div class="card-action">
                         <p class="flow-text">
                             Tutoring is FREE for students!
-                            <br><br>
+                            <br>
                             Now Hiring!
-                            <br><br>
+                            <br>
                             Talk to Matthew Pleva and send your resume to matthew.pleva@sjsu.edu.
-                            <br><br>
-                            Below is a list of the current tutors:
                         </p>
                     </div>
                 </div>

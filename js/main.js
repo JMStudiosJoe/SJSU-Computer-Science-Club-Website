@@ -1,13 +1,10 @@
-function up (speed) {
-    $("html, body").animate({ scrollTop: 0 }, speed);
-    setOffset();
-}
+$("#scrolltotop").click(function() {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+});
 
-function setOffset() {
-    var off = $("#tabsnav").offset().top;
-    if (off != 0)
-        offset = off;
-}
+$(".scrolltotop").click(function() {
+    $("html, body").animate({ scrollTop: offset }, "slow");
+});
 
 window.onscroll = function () {
     if ($(window).scrollTop() > offset)
@@ -55,14 +52,12 @@ function widthChanges() {
     }
 }
 
-widthChanges();
 $(window).resize(function() {
+    offset = $("#tabsnav").offset().top;
     widthChanges();
-    up("fast");
 });
-setOffset();
 
-setInterval(function() {
+window.setInterval(function(){
     $(".card-image").each(function(index) {
         if($(this).children('img').attr("src").indexOf("NoImageAvailalbe") > -1)
             $(this).hide();
@@ -71,7 +66,10 @@ setInterval(function() {
         if($(this).has("ul").length == 0 && ($(this).children('p').html() == null || $(this).children('p').html().trim() == ""))
             $(this).hide();
     });
+    widthChanges();
 }, 1000);
+
+var offset = $("#tabsnav").offset().top;
 
 /*=================================================================================
 Canvas Background Stuff
