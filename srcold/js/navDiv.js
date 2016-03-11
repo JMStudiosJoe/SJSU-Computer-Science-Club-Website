@@ -29,7 +29,7 @@ var NavigationDiv = React.createClass({
 	render:function()
 	{
 
-			return (<h1>FUCK YOU</h1>);
+			return (<h1></h1>);
 		// return (<ul>
 
 		// 	{this.data.posts.map(function(post) {
