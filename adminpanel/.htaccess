@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Admin Panel"
+AuthUserFile C:/Users/Oindril%20Dutta/Documents/GitHub/SJSU-Computer-Science-Club-Website/adminpanel/.htpasswd
+require valid-user

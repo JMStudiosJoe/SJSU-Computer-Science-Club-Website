@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <html>
 <head>
@@ -15,30 +15,25 @@
     <link rel = "stylesheet" href = "css/main.css">
     <link rel = "stylesheet" href = "css/responsive.css">
 </head>
-<!--
-Features:
-* Forum with Rules
-* Commenting on posts with rules, Disqus?
-* Rename MISC
-
-Design:
-* Zoom Out
--->
 <body>
-<canvas id="draw"></canvas>
+<div class="fixed-action-btn" style="bottom: 20px; right: 20px;">
+    <a class="btn-floating btn-large red">
+        <i class="large material-icons">add</i>
+    </a>
+    <ul>
+        <li><a class="btn-floating red" onclick='refresh()'><i class="large material-icons">refresh</i></a></li>
+        <li><a class="btn-floating orange" onclick='add("Home")'>Hom</a></li>
+        <li><a class="btn-floating yellow darken-1" onclick='add("About")'>Abut</a></li>
+        <li><a class="btn-floating green" onclick='add("Tutoring")'>Tutor</a></li>
+        <li><a class="btn-floating blue" onclick='add("Jobs")'>Job</a></li>
+        <li><a class="btn-floating purple" onclick='add("Projects")'>Proj</a></li>
+        <li><a class="btn-floating pink" onclick='add("Misc")'>Misc</a></li>
+    </ul>
+</div>
 <div id="container">
-    <div class="fixed-action-btn tooltipped" data-position="left" data-delay="10" data-tooltip="Back to Top" id="scrolltotop" style="bottom: 45px; right: 24px;">
-        <a class="btn-floating btn-large waves-effect waves-light blue darken-4">
-            <i class="large material-icons">navigation</i>
-        </a>
-    </div>
-    <div class="row">
-        <div id="logoimage" class="col s6 offset-s3">
-            <img id="logo" class="center-align responsive-img" src="img/logo.png">
-        </div>
-    </div>
     <div id="innerContainer" class="container center-align">
         <div class="row">
+            <h1><b id="headtitle">SJSU Admin Panel</b></h1>
             <div id="tabsnav" class="z-depth-3 col s12">
                 <ul class="tabs">
                     <li class="tab col s2 scrolltotop"><a class="active" href="#Home">Home</a></li>
@@ -49,171 +44,140 @@ Design:
                     <li class="tab col s2 scrolltotop"><a href="#Misc">Misc</a></li>
                 </ul>
             </div>
-            <div id="Home" class="majortab col s8 offset-s2"></div>
-            <div id="About" class="majortab col s8 offset-s2">
-                <br><br>
-                <div class="z-depth-4 card">
-                    <div class="card-content">
-                        <span class="card-title grey-text text-darken-4"><h4>About</h4></span>
-                    </div>
-                    <div class="card-action">
-                        <p class="flow-text">Welcome, the SJSU Computer Science club is available for students to unwind, grab a bite to eat and study.</p>
-                    </div>
-                </div>
-                <br><br>
-                <div class="z-depth-4 card">
-                    <div class="card-content">
-                        <span class="card-title grey-text text-darken-4"><h4>Our Goals</h4></span>
-                    </div>
-                    <div class="card-action">
-                        <p class="flow-text">We plan on hosting events for students to gain realy world experience, in a variety of ways.</p>
-                        <ul class="collection">
-                            <li class="collection-item">Hacker Rank Computer Science related problems.</li>
-                            <li class="collection-item">Team oriented student projects.</li>
-                            <li class="collection-item">SJSU Algorithms practice group.</li>
-                        </ul>
-                    </div>
-                </div>
-                <br><br>
-                <div class="z-depth-4 card">
-                    <div class="card-content">
-                        <span class="card-title grey-text text-darken-4"><h4>Join</h4></span>
-                    </div>
-                    <div class="card-action">
-                        <p class="flow-text">Joining is easy, just speak to an officer and best of all its free!</p>
-                    </div>
-                </div>
-                <br><br>
-                <div class="z-depth-4 card">
-                    <div class="card-content">
-                        <span class="card-title grey-text text-darken-4"><h4>Rules</h4></span>
-                    </div>
-                    <div class="card-action">
-                        <ul class="collection">
-                            <li class="collection-item">No throwing objects.</li>
-                            <li class="collection-item">No form of abuse.</li>
-                            <li class="collection-item">If open seat capacity is less than 5 seats, no GAMING except on safa areas.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div id="Tutoring" class="majortab col s8 offset-s2">
-                <br><br>
-                <div class="z-depth-4 card">
-                    <div class="card-content">
-                        <span class="card-title grey-text text-darken-4"><h4>Tutoring</h4></span>
-                    </div>
-                    <div class="card-action">
-                        <p class="flow-text">
-                            Tutoring is FREE for students!
-                            <br>
-                            Now Hiring!
-                            <br>
-                            Talk to Matthew Pleva and send your resume to matthew.pleva@sjsu.edu.
-                        </p>
-                    </div>
-                </div>
-                <div id="Tutors">
-                </div>
-            </div>
-            <div id="Jobs" class="majortab col s8 offset-s2">
-                <div class="z-depth-4 card">
-                    <div class="card-content">
-                        <span class="card-title grey-text text-darken-4"><h4>Job Postings</h4></span>
-                        <h5>All postings are paid in US Dollars ($).</h5>
-                    </div>
-                    <div class="card-action">
-                        <p class="flow-text">If you would you like to announce a job posting please contact a club officer.</p>
-                        <p class="flow-text">Create a LinkedIn profile and fill in as much information as you can.</p>
-                        <p class="flow-text">Update your Github account with current projects, make sure they work, and try to have a constant stream of green on your status.</p>
-                    </div>
-                </div>
-                <div id="job">
-                </div>
-            </div>
-            <div id="Projects" class="majortab col s8 offset-s2"></div>
-            <div id="Misc" class="majortab col s8 offset-s2">
-                <br><br>
-                <div class="z-depth-4 card">
-                    <div class="card-content">
-                        <span class="card-title grey-text text-darken-4"><h4>Useful Info</h4></span>
-                    </div>
-                    <div class="card-action">
-                        <p class="flow-text">Here is some useful information we thought students might enjoy.</p>
-                    </div>
-                </div>
-                <br><br>
-                <div class="z-depth-4 card">
-                    <div class="card-content">
-                        <span class="card-title grey-text text-darken-4"><h4>Tutorials</h4></span>
-                    </div>
-                    <div class="card-action">
-                        <ul class="collection">
-                            <li class="collection-item"><a href="https://www.thenewboston.com/">TheNewBoston</a></li>
-                            <li class="collection-item"><a href="https://www.sjpl.org/treehouseaccount">TeamTreeHouse</a></li>
-                            <li class="collection-item"><a href="http://codingbat.com/">CodingBat</a></li>
-                            <li class="collection-item"><a href="http://www.freecodecamp.com/">FreeCodeCamp</a></li>
-                            <li class="collection-item"><a href="https://www.codecademy.com/">CodeAcademy</a></li>
-                            <li class="collection-item"><a href="https://www.codeschool.com/">CodeSchool</a></li>
-                            <li class="collection-item"><a href="https://www.bento.io/">Bento</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <br><br>
-                <div class="z-depth-4 card">
-                    <div class="card-image waves-effect waves-block waves-light">
-                        <img src="img/misc/github.png">
-                    </div>
-                    <div class="card-content">
-                        <span class="card-title grey-text text-darken-4"><h4>Git Workshop</h4></span>
-                    </div>
-                    <div class="card-action">
-                        <p class="flow-text">How to use github workshops: <a href="https://www.youtube.com/watch?v=UlWBMosOimk">Video</a></p>
-                    </div>
-                </div>
-                <br><br>
-                <div class="z-depth-4 card">
-                    <div class="card-image waves-effect waves-block waves-light">
-                        <img src="img/misc/xcode.png">
-                    </div>
-                    <div class="card-content">
-                        <span class="card-title grey-text text-darken-4"><h4>iOS Workshop</h4></span>
-                    </div>
-                    <div class="card-action">
-                        <p class="flow-text">iOS workshop video: <a href="https://www.youtube.com/watch?v=jfzRjUx6tmU">Video</a></p>
-                    </div>
-                </div>
-                <br><br>
-                <div class="z-depth-4 card">
-                    <div class="card-image waves-effect waves-block waves-light">
-                        <img src="img/misc/studentpack.png">
-                    </div>
-                    <div class="card-content">
-                        <span class="card-title grey-text text-darken-4"><h4>Student Developer Pack</h4></span>
-                    </div>
-                    <div class="card-action">
-                        <p class="flow-text"><a href="https://education.github.com/pack">Github Student Pack</a></p>
-                    </div>
-                </div>
-                <div id="Miscs">
-                </div>
-            </div>
-            <div id="foot" class="col s4 offset-s4">
-                <div class="card-panel z-depth-3" id="footer">
-                    <span class="white-text">© 2015 SJSU Computer Science</span><br>
-                    <a id="pink" href="http://odutta.me" target="_blank">Made with &#x2764; by Oindril Dutta</a>
+            <div id="Home" class="col s12 tagb"></div>
+            <div id="About" class="col s12 tagb"></div>
+            <div id="Tutoring" class="col s12 tagb"></div>
+            <div id="Jobs" class="col s12 tagb"></div>
+            <div id="Projects" class="col s12 tagb"></div>
+            <div id="Misc" class="col s12 tagb"></div>
+        </div>
+    </div>
+</div>
+
+<div id="modal1" class="modal">
+    <div id="foreground" class="valign-wrapper hide">
+        <div id="loader" class="preloader-wrapper big active valign">
+            <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal-content">
+        <h4 id="mtitle"></h4>
+        <div class="input-field col s6">
+            <input placeholder=" " id="title" type="text" class="validate">
+            <label for="title">Post Title</label>
+        </div>
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>File</span>
+                <input type="file" id="imgwow">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
+        </div>
+        <p>
+            <input type="checkbox" id="isPinned" />
+            <label for="isPinned">isPinned</label>
+        </p>
+        <p>
+            <input type="checkbox" id="isJob" />
+            <label for="isJob">isJob</label>
+        </p>
+        <p>
+            <input type="checkbox" id="isProject" />
+            <label for="isProject">isProject</label>
+        </p>
+        <p>
+            <input type="checkbox" id="isUsefulPost" />
+            <label for="isUsefulPost">isUsefulPost</label>
+        </p>
+        <p>
+            <input type="checkbox" id="isClubPost" />
+            <label for="isClubPost">isClubPost</label>
+        </p>
+        <div class="input-field col s12">
+            <textarea placeholder=" " id="summary" class="materialize-textarea"></textarea>
+            <label for="summary">Summary</label>
+        </div>
+        <div class="input-field col s12">
+            <textarea placeholder=" " id="body" class="materialize-textarea"></textarea>
+            <label for="body">Body</label>
+        </div>
+        <div class="input-field col s6">
+            <input placeholder=" " id="edate" type="text" class="validate">
+            <label for="edate">Event Date</label>
+        </div>
+        <div class="input-field col s6">
+            <input placeholder=" " id="edate" type="text" class="validate">
+            <label for="edate">Event Date 2</label>
+        </div>
+        <div class="input-field col s6">
+            <input placeholder=" " id="etime" type="text" class="validate">
+            <label for="etime">Event Time</label>
+        </div>
+        <div class="input-field col s6">
+            <input placeholder=" " id="elocation" type="text" class="validate">
+            <label for="elocation">Location</label>
+        </div>
+        <div class="input-field col s12">
+            <textarea placeholder=" " id="ProjectOrJobDescription" class="materialize-textarea"></textarea>
+            <label for="ProjectOrJobDescription">Project or Job Description</label>
+        </div>
+        <div class="input-field col s12">
+            <textarea placeholder=" " id="ProjectOrJobCrowd" class="materialize-textarea"></textarea>
+            <label for="ProjectOrJobCrowd">Project or Job Crowd</label>
+        </div>
+        <div class="input-field col s6">
+            <input placeholder=" " id="city" type="text" class="validate">
+            <label for="city">City</label>
+        </div>
+        <div class="input-field col s6">
+            <input placeholder=" " id="collegeBuilding" type="text" class="validate">
+            <label for="collegeBuilding">collegeBuilding</label>
+        </div>
+        <p>
+            <input type="checkbox" id="hasMoney"/>
+            <label for="hasMoney">Job hasMoney</label>
+        </p>
+        <p>
+            <input type="checkbox" id="isHackathon"/>
+            <label for="isHackathon">isHackathon</label>
+        </p>
+        <p>
+            <input type="checkbox" id="isOther"/>
+            <label for="isOther">isOther</label>
+        </p>
+        <p>
+            <input type="checkbox" id="isSchool"/>
+            <label for="isSchool">isSchool</label>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <a id="cancel" href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Disagree</a>
+        <a id="addupdate" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
 </div>
-<script src="https://www.parsecdn.com/js/parse-latest.js"></script>
-<script src="https://www.parsecdn.com/js/parse-react.js"></script>
-<script>
-    Parse.initialize("05WHW6H1QMXh3LvET609KcoPGkDJC0jX5dQXx3fg", "DHOSlsNvtKy98lgrl3ixYFnkvfVWiNcVVTyjft00");
-</script>
-<script src="src/build.js"></script>
+
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <h4 id="mtitle"></h4>
+    </div>
+    <div class="modal-footer">
+        <a id="cancel" href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Disagree</a>
+        <a id="addupdate" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+</div>
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://www.parsecdn.com/js/parse-latest.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 </body>

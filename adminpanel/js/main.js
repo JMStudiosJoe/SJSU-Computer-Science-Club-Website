@@ -1,196 +1,176 @@
-$("#scrolltotop").click(function() {
-    $("html, body").animate({ scrollTop: 0 }, "slow");
+Parse.initialize("05WHW6H1QMXh3LvET609KcoPGkDJC0jX5dQXx3fg", "DHOSlsNvtKy98lgrl3ixYFnkvfVWiNcVVTyjft00");
+
+var postsData;
+var tutorsData;
+
+$(document).ready(function() {
+    refresh();
 });
 
-$(".scrolltotop").click(function() {
-    $("html, body").animate({ scrollTop: offset }, "slow");
-});
-
-window.onscroll = function () {
-    if ($(window).scrollTop() > offset)
-        $("#tabsnav").css({
-            "position": "fixed",
-            "top": "0",
-            "left": "0",
-            "z-index": "2",
-            "width": $("#tabsnav").width()+"px",
-            "margin-left": (($(window).width()-$("#tabsnav").width())/2)+"px"
-        });
-    else
-        $("#tabsnav").removeAttr("style");
-};
-
-function widthChanges() {
-    if ($(window).width() < 400) {
-        $(".majortab").each(function(index) {
-            $(this).attr('class', "majortab col s12");
-        });
-        $("#innerContainer").removeClass("container");
-        $("#logoimage").attr('class', "col s12");
-        $("#foot").attr('class', "col s6 offset-s3");
-    } else if ($(window).width() < 600) {
-        $(".majortab").each(function(index) {
-            $(this).attr('class', "majortab col s10 offset-s1");
-        });
-        $("#innerContainer").removeClass("container");
-        $("#logoimage").attr('class', "col s10 offset-s1");
-        $("#foot").attr('class', "col s6 offset-s3");
-    } else if ($(window).width() < 900) {
-        $(".majortab").each(function(index) {
-            $(this).attr('class', "majortab col s10 offset-s1");
-        });
-        $("#innerContainer").removeClass("container");
-        $("#logoimage").attr('class', "col s8 offset-s2");
-        $("#foot").attr('class', "col s4 offset-s4");
-    } else {
-        $(".majortab").each(function(index) {
-            $(this).attr('class', "majortab col s8 offset-s2");
-        });
-        $("#innerContainer").addClass("container");
-        $("#logoimage").attr('class', "col s6 offset-s3");
-        $("#foot").attr('class', "col s4 offset-s4");
-    }
+function add(id) {
+    $('#modal1').openModal();
+    $('#modal1 #mtitle').html("Add "+id);
+    $('#modal1 #isPinned').attr("checked", false);
+    $('#modal1 #isJob').attr("checked", false);
+    $('#modal1 #isProject').attr("checked", false);
+    $('#modal1 #isUsefulPost').attr("checked", false);
+    $('#modal1 #isClubPost').attr("checked", false);
+    var str;
+    if(id == "Home")
+        str = "isPinned";
+    else if(id == "Jobs")
+        str = "isJob";
+    else if(id == "Projects")
+        str = "isProject";
+    else if(id == "Misc")
+        str = "isUsefulPost";
+    $('#modal1 #'+str).attr("checked", true);
+    var Posts = Parse.Object.extend("Posts");
+    var post = new Posts();
+    post.save(null, {
+        success: function(post) {
+            //alert('New object created with objectId: ' + post.id);
+            $("#modal1 #addupdate").attr('onclick', 'parsePostPush("modal1", "'+post.id+'")');
+            $("#modal1 #cancel").attr('onclick', 'delt('+post.id+', false, true)');
+        },
+        error: function(post, error) {alert('Failed to create new object, with error code: ' + error.message);}
+    });
 }
 
-$(window).resize(function() {
-    offset = $("#tabsnav").offset().top;
-    widthChanges();
-});
+function edit(objId) {
+    $('#modal1 #foreground').toggleClass("hide");
+    $('#modal1').openModal();
+    $('#modal1 #mtitle').html("Edit "+objId);
+    var Posts = Parse.Object.extend("Posts");
+    var query = new Parse.Query(Posts);
+    query.get(objId, {
+        success: function(obj) {
+            $("#modal1 #title").val(obj.get("title"));
+            if(obj.get("isPinned"))
+                $("#modal1 #isPinned").attr("checked", true);
+            if(obj.get("isJob"))
+                $("#modal1 #isJob").attr("checked", true);
+            if(obj.get("isProject"))
+                $("#modal1 #isProject").attr("checked", true);
+            if(obj.get("isUsefulPost"))
+                $("#modal1 #isUsefulPost").attr("checkedked", true);
+            if(obj.get("isClubPost"))
+                $("#modal1 #isClubPost").attr("checked", true);
+            $("#modal1 #summary").val(obj.get("summary"));
+            $("#modal1 #body").val(obj.get("body"));
+            $('#modal1 #foreground').toggleClass("hide");
 
-window.setInterval(function(){
-    $(".card-image").each(function(index) {
-        if($(this).children('img').attr("src").indexOf("NoImageAvailalbe") > -1)
-            $(this).hide();
-    });
-    $(".card-action").each(function(index) {
-        if($(this).has("ul").length == 0 && ($(this).children('p').html() == null || $(this).children('p').html().trim() == ""))
-            $(this).hide();
-    });
-    widthChanges();
-}, 1000);
-
-var offset = $("#tabsnav").offset().top;
-
-/*=================================================================================
-Canvas Background Stuff
-=================================================================================*/
-
-var animate = true;
-var canvas = document.getElementById('draw');
-var ctx = canvas.getContext('2d');
-var W = window.innerWidth;
-var H = window.innerHeight;
-canvas.width = W;
-canvas.height = H+300;
-
-var colors = [{
-    r: 242, g: 231, b: 82
-}, {
-    r: 90, g: 26, b: 122
-}, {
-    r: 227, g: 205, b: 59
-}, {
-    r: 244, g: 240, b: 38
-},{
-    r: 240, g: 219, b: 79
-}, {
-    r: 66, g: 26, b: 122
-}, {
-    r: 103, g: 0, b: 255
-}, {
-    r: 90, g: 10, b: 255
-}, {
-    r: 177, g: 122, b: 230
-}, {
-    r: 240, g: 209, b: 108
-}];
-
-window.requestAnimFrame = function() {
-    return (
-        window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        window.oRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
-        function(c) {
-            window.setTimeout(c, 1000 / 60);
+            if(obj.get("isSchool"))
+                $("#modal1 #isSchool").attr("checked", true);
+            if(obj.get("isJob"))
+                $("#modal1 #isJob").attr("checked", true);
+            if(obj.get("isProject"))
+                $("#modal1 #isProject").attr("checked", true);
+            if(obj.get("isHackathon"))
+                $("#modal1 #isHackathon").attr("checked", true);
+            if(obj.get("hasMoney"))
+                $("#modal1 #hasMoney").attr("checked", true);
+            if(obj.get("isOther"))
+                $("#modal1 #isOther").attr("checked", true);
+        },
+        error: function(obj, error) {
+            alert("Could not retrieve this obj - "+obj+" "+error);
+            $('#modal1 #foreground').toggleClass("hide");
         }
-    );
-}();
+    });
+}
 
-var squares = [];
-var lastRender = Date.now();
-var lastCreate = Date.now();
+function delt(objId, tutors, noAlert) {
+    var type = "Posts";
+    if(tutors)
+        type = "Tutors";
+    var Objects = Parse.Object.extend(type);
+    var query = new Parse.Query(Objects);
+    query.get(objId, {
+        success: function(objToDel) {
+            if (noAlert || confirm('Are you absolutely fucking sure you want to delete object '+objId+'?')) {
+                objToDel.destroy({
+                    success: function(myObject) {
+                        if(!noAlert)
+                            alert("*tear* It has been done...");
+                    },
+                    error: function(myObject, error) {
+                        if(!noAlert)
+                            alert("LOL you can't delete it!");
+                    }
+                });
+            } else
+                if (!noAlert)
+                    alert("Phew! Safe.");
+        },
+        error: function(object, error) {
+            if(!noAlert)
+                alert("LOL you can't delete it!");
+        }
+    });
+}
 
-function render() {
-    if(animate)
-    {
-        var timeDelta = new Date().getTime() - lastRender;
-        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        if (Date.now() - lastCreate >= 112) {
-            var sze = randr(20, 50);
-            var color = colors[Math.floor(Math.random() * colors.length)];
-            squares.push({
-                width: sze,
-                height: sze,
-                vel: randr(50, 100), //pixs per second
-                x: randr(-sze + 10, canvas.width - 10),
-                y: randr(10, canvas.height - 10),
-                age: 1,
-                r: color.r,
-                g: color.g,
-                b: color.b
+function parsePostPush(id, obId) {
+    var Posts = Parse.Object.extend("Posts");
+    var query = new Parse.Query(Posts);
+    query.get(obId, {
+        success: function(post) {
+            if(tutor)
+                post =
+            post.save(null, {
+                success: function(post) {
+                    alert('Object created with objectId: ' + post.id);
+                },
+                error: function(post, error) {
+                    alert('Failed to create or update the object, with error code: ' + error.message);
+                }
             });
-            lastCreate = Date.now();
+        },
+        error: function(object, error) {
+            alert("It's not saving! Oh no!")
         }
-        for (var i = 0; i < squares.length; i++) {
-            var sq = squares[i];
-            ctx.fillStyle = ["rgba(", sq.r, ", ", sq.g, ", ", sq.b, ",", (sq.age / 600), ")"].join("");
-            ctx.fillRect(sq.x, sq.y, sq.width, sq.height);
-            sq.y -= sq.vel / 1000 * timeDelta;
-            sq.age++;
-            if (sq.y + sq.height < 0) {
-                squares.splice(i, 1);
-                i--;
-            }
+    });
+}
+
+function refresh() {
+    var query = new Parse.Query(Parse.Object.extend("Posts"));
+    query.find({
+    success: function(results) {
+        $(".tagb").html("");
+        console.log("Successfully retrieved " + results.length + " posts.");
+        postsData = results;
+        var divName;
+        var object;
+        for (var i = 0; i < results.length; i++) {
+            divName = "Home";
+            object = results[i];
+            if(object.get('isJob') != undefined && object.get('isJob'))
+                divName = "Jobs";
+            else if(object.get('isProject') != undefined && object.get('isProject'))
+                divName = "Projects";
+            else if(object.get('isUsefulPost') != undefined && object.get('isUsefulPost'))
+                divName = "Misc";
+            if($("#"+divName).html() == "")
+                $("#"+divName).html('<br><ul class="collection z-depth-2"></ul>');
+            divName = "#"+divName+" ul";
+            $(divName).append('<li class="collection-item"><div><span class="title">'+object.get('title')+'</span><br><span class="summary">'+object.get('summary')+'</span><br><span class="body">'+object.get('body')+'</span><br><a href="#!" onclick=delete("'+object.id+'")><i class="material-icons">close</i></a><a href="#!" onclick=moveToTop("'+object.id+'")><i class="material-icons">keyboard_arrow_up</i></a><a href="#!" onclick=edit("'+object.id+'")><i class="material-icons">mode_edit</i></a></div></li>');
         }
-        lastRender = new Date().getTime();
-    }
+    }, error: function(error) {
+        console.log("Error: " + error.code + " " + error.message);
+    }});
+    query = new Parse.Query(Parse.Object.extend("Tutors"));
+    query.find({
+    success: function(results) {
+        console.log("Successfully retrieved " + results.length + " tutors.");
+        tutorsData = results;
+        var object;
+        for (var i = 0; i < results.length; i++) {
+            if($("#Tutoring").html() == "")
+                $("#Tutoring").html('<br><ul class="collection z-depth-2"></ul>');
+            object = results[i];
+            $("#Tutoring ul").append('<li class="collection-item"><div><span class="title">'+object.get('firstName')+' '+object.get('lastName')+'</span><br><span class="summary">'+object.get('title')+'</span><br><span class="body">'+object.get('biography')+'</span><br><a href="#!" onclick=delete("'+object.id+'"))><i class="material-icons">close</i></a><a href="#!" onclick=moveToTop("'+object.id+'")><i class="material-icons">keyboard_arrow_up</i></a><a href="#!" onclick=edit("'+object.id+'")><i class="material-icons">mode_edit</i></a></div></li>');
+        }
+    }, error: function(error) {
+        console.log("Error: " + error.code + " " + error.message);
+    }});
 }
-
-function randr(min, max) {
-    return Math.random() * (max - min) + min;
-}
-
-function resize() {
-    var he = window.innerHeight;
-    var wi = window.innerWidth;
-    canvas.height = he+300;
-    canvas.width = wi;
-    if (window.devicePixelRatio == 2) {
-        canvas.width = wi * 2;
-        canvas.height = (he+300) * 2;
-        canvas.style.height = he+300;
-        canvas.style.width = wi;
-        ctx.scale(2, 2);
-    }
-    if(wi < 975)
-    {
-        canvas.height = 0;
-        canvas.width = 0;
-    }
-}
-
-window.onresize = resize;
-resize();
-
-function toggleanim()
-{
-    animate = !animate;
-    lastRender = new Date().getTime();
-}
-
-(function loop() {
-    requestAnimFrame(loop);
-    render();
-})();
