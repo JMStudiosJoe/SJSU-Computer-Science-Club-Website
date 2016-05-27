@@ -1,6 +1,13 @@
 var offset; // The number of pixels from the top of the screen to the top of the tabs navigation bar. Used to determine when the bar should become fixed.
 $(window).resize(function () { setOffset(); }); // The offset is reset every time the screen resizes, since the logo and fonts change size..
 
+$('a[href^="#"]').on('click', function(event) {
+    if($(this.href).length) {
+        event.preventDefault();
+        $('html, body').animate({ scrollTop: $(this.href).offset().top }, 500);
+    }
+});
+
 function setOffset() { // Resetting the offset to get the pixels from the top of the screen to the top of the tabs navigation bar.
     var off = $("#tabsnav").offset().top;
     if (off != 0)
