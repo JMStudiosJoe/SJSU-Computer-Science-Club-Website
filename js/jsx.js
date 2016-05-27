@@ -54,8 +54,11 @@ firebase.database().ref('posts').on('value', function (snapshot) {
     for (var key in snapshot.val()) {
         keys = Object.keys(snapshot.val()[key]); // Gets all the keys of the posts in snapshot.val()[key], key can be home, about, etc.
         items = []; // Makes an empty array and fills it with all the posts
-        for (var j = 0; j < keys.length; j++)
+        for (var j = 0; j < keys.length; j++) {
             items[j] = snapshot.val()[key][keys[j]]; // The array is created to make react use the map function, which only works with arrays.
+            console.log(items[j].body.toString());
+        }
+
         if (key == "tutoring")
             key = "r" + key;
         ReactDOM.render(< Posts all = {items} />, document.getElementById(key)); //Actually render the posts.
