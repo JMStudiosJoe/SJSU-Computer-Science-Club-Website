@@ -1,4 +1,5 @@
-a, .card .card-action a {
+a,
+.card .card-action a {
     text-transform: none;
 }
 
@@ -70,9 +71,14 @@ body {
     background-color: #1d57af;
 }
 
-#headtitle {
+#headtitle,
+#quickstart-sign-in-status {
     color: white;
-    text-shadow: 0px 4px 5px rgba(0,0,0,0.3);
+    text-shadow: 0px 4px 5px rgba(0, 0, 0, 0.3);
+}
+
+h5 {
+    margin-bottom: .67em;
 }
 
 #foreground {
@@ -84,4 +90,27 @@ body {
 
 #loader {
     margin: auto;
+}
+
+.firebaseui-idp-button {
+    width: inherit;
+}
+
+.row .tagb {
+    padding: 0;
+    margin-top: 15px;
+}
+
+.collection .collection-item.avatar .secondary-content {
+    position: relative;
+    top: 0px;
+    right: -10px;
+}
+
+.tagb ul {
+    background-color: white;
+}
+
+.modal {
+    max-height: 80%;
 }

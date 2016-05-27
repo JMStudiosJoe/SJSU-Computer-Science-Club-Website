@@ -1,176 +1,176 @@
-Parse.initialize("05WHW6H1QMXh3LvET609KcoPGkDJC0jX5dQXx3fg", "DHOSlsNvtKy98lgrl3ixYFnkvfVWiNcVVTyjft00");
+$("#manage").hover(function() { // Changes the icon of the FAB upon hover to refresh.
+    $("#manage").html("refresh");
+}, function() {
+    $("#manage").html("add");
+});
 
+var app;
+var auth;
+var database;
+var storage;
 var postsData;
 var tutorsData;
 
-$(document).ready(function() {
-    refresh();
+$(document).ready(function() { // Firebase template code to manage authentication.
+    var config = {
+        apiKey: "AIzaSyC8yFGv6OUWan61bsVanCajkkBCN_wZwx4",
+        authDomain: "sjsu-cs-club-website.firebaseapp.com",
+        databaseURL: "https://sjsu-cs-club-website.firebaseio.com/",
+        storageBucket: "sjsu-cs-club-website.appspot.com",
+    };
+    app = firebase.initializeApp(config);
+    auth = app.auth();
+    database = app.database();
+    storage = app.storage();
+    auth.onAuthStateChanged(function(user) {
+        if (user && user.uid == "LY3ExjBaslSGEv2NAvVb2185qbu2") {
+            user.getToken().then(function(accessToken) {
+                document.getElementById('quickstart-sign-in-status').innerHTML = 'Signed in as ' + user.email + ' | <a href="#" onclick=signout()>Log Out</a>';
+                refresh();
+            });
+        } else {
+            signOut();
+        }
+    }, function(error) {
+        signout();
+    });
 });
 
-function add(id) {
-    $('#modal1').openModal();
-    $('#modal1 #mtitle').html("Add "+id);
-    $('#modal1 #isPinned').attr("checked", false);
-    $('#modal1 #isJob').attr("checked", false);
-    $('#modal1 #isProject').attr("checked", false);
-    $('#modal1 #isUsefulPost').attr("checked", false);
-    $('#modal1 #isClubPost').attr("checked", false);
-    var str;
-    if(id == "Home")
-        str = "isPinned";
-    else if(id == "Jobs")
-        str = "isJob";
-    else if(id == "Projects")
-        str = "isProject";
-    else if(id == "Misc")
-        str = "isUsefulPost";
-    $('#modal1 #'+str).attr("checked", true);
-    var Posts = Parse.Object.extend("Posts");
-    var post = new Posts();
-    post.save(null, {
-        success: function(post) {
-            //alert('New object created with objectId: ' + post.id);
-            $("#modal1 #addupdate").attr('onclick', 'parsePostPush("modal1", "'+post.id+'")');
-            $("#modal1 #cancel").attr('onclick', 'delt('+post.id+', false, true)');
-        },
-        error: function(post, error) {alert('Failed to create new object, with error code: ' + error.message);}
+function signout() { // Signs out the user and moves back to the login page.
+    auth.signOut();
+    window.location = "index.html";
+}
+
+function refresh() { // Refreshes the adminpanel posts with firebase data.
+    firebase.database().ref('posts').once('value', function(snapshot) {
+        postsData = snapshot.val();
+        for (key in postsData) {
+            var text = "";
+            for (post in postsData[key])
+                text += '<ul id="posts,' + key + "," + post + '" class="collection"><li class="collection-item avatar"><img src="' + postsData[key][post].image + '" class="circle"><span class="title">' + postsData[key][post].title + '</span><p>' + postsData[key][post].summary + '<br>' + postsData[key][post].body + '<br>' + postsData[key][post].eventTime + '<br>' + postsData[key][post].address + '</p><a href="#!" class="secondary-content" onclick=edit("posts,' + key + "," + post + '")><i class="material-icons">mode_edit</i></a><a href="#!" class="secondary-content" onclick=moveToBottom("posts,' + key + "," + post + '")><i class="material-icons">keyboard_arrow_down</i></a><a href="#!" class="secondary-content" onclick=delt("posts,' + key + "," + post + '")><i class="material-icons">close</i></a></li></ul>';
+            if (key == "tutoring")
+                addTutors(text);
+            else
+                $("#" + key).html(text);
+        }
     });
 }
 
-function edit(objId) {
+function addTutors(origtext) { // Adds the tutors to the adminpanel view
+    origtext += '<div class="card-panel"><b>Begin Tutors Data</b></div>';
+    firebase.database().ref('tutors').once('value', function(snapshot) {
+        tutorsData = snapshot.val();
+        for (key in tutorsData)
+            origtext += '<ul id="tutors,' + key + '" class="collection"><li class="collection-item avatar"><img src="' + tutorsData[key].image + '" class="circle"><span class="title">' + tutorsData[key].title + '</span><p>' + tutorsData[key].bio + '<br>' + tutorsData[key].fname + '<br>' + tutorsData[key].lname + '<br>' + tutorsData[key].email + '</p><a href="#!" class="secondary-content" onclick=edit("tutors,' + key + '")><i class="material-icons">mode_edit</i></a><a href="#!" class="secondary-content" onclick=moveToBottom("tutors,' + key + '")><i class="material-icons">keyboard_arrow_down</i></a><a href="#!" class="secondary-content" onclick=delt("tutors,' + key + '")><i class="material-icons">close</i></a></li></ul>';
+        $("#tutoring").html(origtext);
+    });
+}
+
+function moveToBottom(id) { // Moves the post clicked on to the bottom by resetting the key to a new timestamp
+    id = id.split(',');
+    if (id[0] == "posts")
+        database.ref(id[0] + "/" + id[1] + "/" + Date.now()).set(postsData[id[1]][id[2]]);
+    else if (id[0] == "tutors") {
+        database.ref(id[0] + "/" + Date.now()).set(tutorsData[id[1]]);
+        id[2] = "";
+    }
+    database.ref(id[0] + "/" + id[1] + "/" + id[2]).remove();
+    refresh();
+}
+
+function delt(id) { // Simply deletes the post once confirmed.
+    id = id.split(',');
+    if (id[0] == "tutors")
+        id[2] = "";
+    if (confirm('Are you absolutely fucking sure you want to delete object ' + id[1] + ' ' + id[2] + '?')) {
+        database.ref(id[0] + "/" + id[1] + "/" + id[2]).remove();
+        refresh();
+        alert("It has been done.");
+    } else
+        alert("Phew! Safe.");
+}
+
+function add(id) { // The function called when a post is to be added.
     $('#modal1 #foreground').toggleClass("hide");
-    $('#modal1').openModal();
-    $('#modal1 #mtitle').html("Edit "+objId);
-    var Posts = Parse.Object.extend("Posts");
-    var query = new Parse.Query(Posts);
-    query.get(objId, {
-        success: function(obj) {
-            $("#modal1 #title").val(obj.get("title"));
-            if(obj.get("isPinned"))
-                $("#modal1 #isPinned").attr("checked", true);
-            if(obj.get("isJob"))
-                $("#modal1 #isJob").attr("checked", true);
-            if(obj.get("isProject"))
-                $("#modal1 #isProject").attr("checked", true);
-            if(obj.get("isUsefulPost"))
-                $("#modal1 #isUsefulPost").attr("checkedked", true);
-            if(obj.get("isClubPost"))
-                $("#modal1 #isClubPost").attr("checked", true);
-            $("#modal1 #summary").val(obj.get("summary"));
-            $("#modal1 #body").val(obj.get("body"));
-            $('#modal1 #foreground').toggleClass("hide");
-
-            if(obj.get("isSchool"))
-                $("#modal1 #isSchool").attr("checked", true);
-            if(obj.get("isJob"))
-                $("#modal1 #isJob").attr("checked", true);
-            if(obj.get("isProject"))
-                $("#modal1 #isProject").attr("checked", true);
-            if(obj.get("isHackathon"))
-                $("#modal1 #isHackathon").attr("checked", true);
-            if(obj.get("hasMoney"))
-                $("#modal1 #hasMoney").attr("checked", true);
-            if(obj.get("isOther"))
-                $("#modal1 #isOther").attr("checked", true);
-        },
-        error: function(obj, error) {
-            alert("Could not retrieve this obj - "+obj+" "+error);
-            $('#modal1 #foreground').toggleClass("hide");
-        }
-    });
+    id = id.split(',');
+    if (id[0] == "posts")
+        $('#modal1 #mtitle').html("Adding to " + id[1] + " in " + id[0]);
+    else
+        $('#modal2 #mtitle').html("Adding to " + id[0]);
+    readyModal(id, false);
 }
 
-function delt(objId, tutors, noAlert) {
-    var type = "Posts";
-    if(tutors)
-        type = "Tutors";
-    var Objects = Parse.Object.extend(type);
-    var query = new Parse.Query(Objects);
-    query.get(objId, {
-        success: function(objToDel) {
-            if (noAlert || confirm('Are you absolutely fucking sure you want to delete object '+objId+'?')) {
-                objToDel.destroy({
-                    success: function(myObject) {
-                        if(!noAlert)
-                            alert("*tear* It has been done...");
-                    },
-                    error: function(myObject, error) {
-                        if(!noAlert)
-                            alert("LOL you can't delete it!");
-                    }
-                });
-            } else
-                if (!noAlert)
-                    alert("Phew! Safe.");
-        },
-        error: function(object, error) {
-            if(!noAlert)
-                alert("LOL you can't delete it!");
-        }
-    });
+function edit(id) { // The function called when a post is to be edited.
+    $('#modal1 #foreground').toggleClass("hide");
+    id = id.split(',');
+    if (id[0] == "posts")
+        $('#modal1 #mtitle').html("Editing post " + id[2] + " in " + id[1]);
+    else
+        $('#modal2 #mtitle').html("Editing tutor " + id[1]);
+    readyModal(id, true);
 }
 
-function parsePostPush(id, obId) {
-    var Posts = Parse.Object.extend("Posts");
-    var query = new Parse.Query(Posts);
-    query.get(obId, {
-        success: function(post) {
-            if(tutor)
-                post =
-            post.save(null, {
-                success: function(post) {
-                    alert('Object created with objectId: ' + post.id);
-                },
-                error: function(post, error) {
-                    alert('Failed to create or update the object, with error code: ' + error.message);
-                }
-            });
-        },
-        error: function(object, error) {
-            alert("It's not saving! Oh no!")
+function readyModal(id, edit) { // Resets the correct modal data according to either edit or add and then open the Modal.
+    var mod = "modal2";
+    var fillData = {
+        "fname": "Sample " + id[0] + " fname",
+        "bio": "Sample " + id[0] + " bio",
+        "lname": "Sample " + id[0] + " lname",
+        "image": "empty.png",
+        "email": "Sample " + id[0] + " email",
+        "title": "Sample " + id[0] + " title"
+    }
+    if (edit)
+        fillData = tutorsData[id[1]];
+    if (id[0] == "posts") {
+        mod = "modal1";
+        fillData = {
+            "address": "Sample " + id[1] + " address",
+            "body": "Sample " + id[1] + " body",
+            "eventTime": Date.now(),
+            "image": "empty.png",
+            "summary": "Sample " + id[1] + " summary",
+            "title": "Sample " + id[1] + " title"
         }
-    });
+        if (edit)
+            fillData = postsData[id[1]][id[2]];
+    }
+    $('#' + mod).openModal();
+    for (key in fillData)
+        $('#' + mod + " #" + key).val(fillData[key]);
+    $("#" + mod + " #addupdate").attr('onclick', 'pushToFirebase("' + mod + '", "' + id + '", ' + edit + ')'); // Gives the correct data to pushToFirebase when clicked.
+    $('#modal1 #foreground').toggleClass("hide");
 }
 
-function refresh() {
-    var query = new Parse.Query(Parse.Object.extend("Posts"));
-    query.find({
-    success: function(results) {
-        $(".tagb").html("");
-        console.log("Successfully retrieved " + results.length + " posts.");
-        postsData = results;
-        var divName;
-        var object;
-        for (var i = 0; i < results.length; i++) {
-            divName = "Home";
-            object = results[i];
-            if(object.get('isJob') != undefined && object.get('isJob'))
-                divName = "Jobs";
-            else if(object.get('isProject') != undefined && object.get('isProject'))
-                divName = "Projects";
-            else if(object.get('isUsefulPost') != undefined && object.get('isUsefulPost'))
-                divName = "Misc";
-            if($("#"+divName).html() == "")
-                $("#"+divName).html('<br><ul class="collection z-depth-2"></ul>');
-            divName = "#"+divName+" ul";
-            $(divName).append('<li class="collection-item"><div><span class="title">'+object.get('title')+'</span><br><span class="summary">'+object.get('summary')+'</span><br><span class="body">'+object.get('body')+'</span><br><a href="#!" onclick=delete("'+object.id+'")><i class="material-icons">close</i></a><a href="#!" onclick=moveToTop("'+object.id+'")><i class="material-icons">keyboard_arrow_up</i></a><a href="#!" onclick=edit("'+object.id+'")><i class="material-icons">mode_edit</i></a></div></li>');
-        }
-    }, error: function(error) {
-        console.log("Error: " + error.code + " " + error.message);
-    }});
-    query = new Parse.Query(Parse.Object.extend("Tutors"));
-    query.find({
-    success: function(results) {
-        console.log("Successfully retrieved " + results.length + " tutors.");
-        tutorsData = results;
-        var object;
-        for (var i = 0; i < results.length; i++) {
-            if($("#Tutoring").html() == "")
-                $("#Tutoring").html('<br><ul class="collection z-depth-2"></ul>');
-            object = results[i];
-            $("#Tutoring ul").append('<li class="collection-item"><div><span class="title">'+object.get('firstName')+' '+object.get('lastName')+'</span><br><span class="summary">'+object.get('title')+'</span><br><span class="body">'+object.get('biography')+'</span><br><a href="#!" onclick=delete("'+object.id+'"))><i class="material-icons">close</i></a><a href="#!" onclick=moveToTop("'+object.id+'")><i class="material-icons">keyboard_arrow_up</i></a><a href="#!" onclick=edit("'+object.id+'")><i class="material-icons">mode_edit</i></a></div></li>');
-        }
-    }, error: function(error) {
-        console.log("Error: " + error.code + " " + error.message);
-    }});
+function pushToFirebase(mod, id, edit) { // The one method that reads the data from the correct modal to then push the new data to firebase.
+    var data = {};
+    var eTime = parseInt($("#" + mod + " #eventTime").val());
+    if (isNaN(eTime))
+        eTime = "";
+    if (mod == "modal1") {
+        data["address"] = $("#" + mod + " #address").val();
+        data["body"] = $("#" + mod + " #body").val();
+        data["eventTime"] = eTime;
+        data["image"] = $("#" + mod + " #image").val();
+        data["summary"] = $("#" + mod + " #summary").val();
+        data["title"] = $("#" + mod + " #title").val();
+    } else {
+        data["fname"] = $("#" + mod + " #fname").val();
+        data["bio"] = $("#" + mod + " #bio").val();
+        data["lname"] = $("#" + mod + " #lname").val();
+        data["image"] = $("#" + mod + " #image").val();
+        data["email"] = $("#" + mod + " #email").val();
+        data["title"] = $("#" + mod + " #title").val();
+    }
+    id = id.split(',');
+    if (id[1] == "tutor")
+        id[1] = Date.now();
+    if (id[0] == "tutors")
+        id[2] = "";
+    if (id[0] == "posts" && id[2] == null)
+        id[2] = Date.now();
+    console.log(id[0] + "/" + id[1] + "/" + id[2]);
+    console.log(data);
+    database.ref(id[0] + "/" + id[1] + "/" + id[2]).set(data);
+    refresh();
 }

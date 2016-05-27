@@ -1,5 +1,14 @@
+/*Increases the font size of the tabs when the website is less than 400px in width */
 @media screen and (max-width: 400px) {
     .tabs .tab a {
         font-size: 1em;
+    }
+}
+/*Essentially removes the effects of the .container class when the website's width is less than 900px*/
+@media screen and (max-width: 900px) {
+    #innerContainer {
+        margin: 0 0;
+        max-width: initial;
+        width: 100%;
     }
 }

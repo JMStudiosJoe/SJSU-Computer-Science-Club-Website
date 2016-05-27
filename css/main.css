@@ -57,10 +57,6 @@ canvas {
     color: #ff4081;
 }
 
-.margintop {
-    margin-top: 40px;
-}
-
-#hidden {
-    display: none;
+.collection {
+    font-size: 1.125rem;
 }

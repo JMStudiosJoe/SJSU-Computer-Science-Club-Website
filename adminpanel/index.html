@@ -2,183 +2,53 @@
 <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
 <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
 <!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
 <html>
+
 <head>
-    <meta charset = "utf-8" name = "viewport" content = "width=device-width, initial-scale=1, user-scalable=no">
-    <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
-    <title>SJSU CS Club</title>
-    <link rel = "shortcut icon" href = "img/myIcon.ico" type = "image/x-icon" title = "MV Hacks">
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>CS Club Admin Panel Login</title>
+    <link rel="shortcut icon" href="img/myIcon.ico" type="image/x-icon" title="MV Hacks">
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-    <link rel = "stylesheet" href = "css/normalize.css">
-    <link rel = "stylesheet" href = "css/main.css">
-    <link rel = "stylesheet" href = "css/responsive.css">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/0.4.0/firebase-ui-auth.css" />
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/0.4.0/firebase-ui-auth.js"></script>
+    <script type="text/javascript"> // All the code that handles the authentication of the admin user.
+        var config = {
+            apiKey: "AIzaSyC8yFGv6OUWan61bsVanCajkkBCN_wZwx4",
+            authDomain: "sjsu-cs-club-website.firebaseapp.com"
+        };
+        var uiConfig = {
+            'signInSuccessUrl': 'panel.html',
+            'signInOptions': [
+                firebase.auth.EmailAuthProvider.PROVIDER_ID
+            ]
+        };
+        var app = firebase.initializeApp(config);
+        var auth = app.auth();
+        var ui = new firebaseui.auth.AuthUI(auth);
+        ui.start('#firebaseui-auth-container', uiConfig);
+    </script>
 </head>
+
 <body>
-<div class="fixed-action-btn" style="bottom: 20px; right: 20px;">
-    <a class="btn-floating btn-large red">
-        <i class="large material-icons">add</i>
-    </a>
-    <ul>
-        <li><a class="btn-floating red" onclick='refresh()'><i class="large material-icons">refresh</i></a></li>
-        <li><a class="btn-floating orange" onclick='add("Home")'>Hom</a></li>
-        <li><a class="btn-floating yellow darken-1" onclick='add("About")'>Abut</a></li>
-        <li><a class="btn-floating green" onclick='add("Tutoring")'>Tutor</a></li>
-        <li><a class="btn-floating blue" onclick='add("Jobs")'>Job</a></li>
-        <li><a class="btn-floating purple" onclick='add("Projects")'>Proj</a></li>
-        <li><a class="btn-floating pink" onclick='add("Misc")'>Misc</a></li>
-    </ul>
-</div>
-<div id="container">
-    <div id="innerContainer" class="container center-align">
-        <div class="row">
-            <h1><b id="headtitle">SJSU Admin Panel</b></h1>
-            <div id="tabsnav" class="z-depth-3 col s12">
-                <ul class="tabs">
-                    <li class="tab col s2 scrolltotop"><a class="active" href="#Home">Home</a></li>
-                    <li class="tab col s2 scrolltotop"><a href="#About">About</a></li>
-                    <li class="tab col s2 scrolltotop"><a href="#Tutoring">Tutoring</a></li>
-                    <li class="tab col s2 scrolltotop"><a href="#Jobs">Jobs</a></li>
-                    <li class="tab col s2 scrolltotop"><a href="#Projects">Projects</a></li>
-                    <li class="tab col s2 scrolltotop"><a href="#Misc">Misc</a></li>
-                </ul>
-            </div>
-            <div id="Home" class="col s12 tagb"></div>
-            <div id="About" class="col s12 tagb"></div>
-            <div id="Tutoring" class="col s12 tagb"></div>
-            <div id="Jobs" class="col s12 tagb"></div>
-            <div id="Projects" class="col s12 tagb"></div>
-            <div id="Misc" class="col s12 tagb"></div>
-        </div>
-    </div>
-</div>
-
-<div id="modal1" class="modal">
-    <div id="foreground" class="valign-wrapper hide">
-        <div id="loader" class="preloader-wrapper big active valign">
-            <div class="spinner-layer spinner-blue-only">
-                <div class="circle-clipper left">
-                    <div class="circle"></div>
-                </div><div class="gap-patch">
-                    <div class="circle"></div>
-                </div><div class="circle-clipper right">
-                    <div class="circle"></div>
-                </div>
+    <div id="container">
+        <div id="innerContainer" class="container center-align">
+            <div class="row">
+                <h1><b id="headtitle">SJSU Admin Panel</b></h1>
+                <div id="firebaseui-auth-container"></div>
             </div>
         </div>
     </div>
-    <div class="modal-content">
-        <h4 id="mtitle"></h4>
-        <div class="input-field col s6">
-            <input placeholder=" " id="title" type="text" class="validate">
-            <label for="title">Post Title</label>
-        </div>
-        <div class="file-field input-field">
-            <div class="btn">
-                <span>File</span>
-                <input type="file" id="imgwow">
-            </div>
-            <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
-            </div>
-        </div>
-        <p>
-            <input type="checkbox" id="isPinned" />
-            <label for="isPinned">isPinned</label>
-        </p>
-        <p>
-            <input type="checkbox" id="isJob" />
-            <label for="isJob">isJob</label>
-        </p>
-        <p>
-            <input type="checkbox" id="isProject" />
-            <label for="isProject">isProject</label>
-        </p>
-        <p>
-            <input type="checkbox" id="isUsefulPost" />
-            <label for="isUsefulPost">isUsefulPost</label>
-        </p>
-        <p>
-            <input type="checkbox" id="isClubPost" />
-            <label for="isClubPost">isClubPost</label>
-        </p>
-        <div class="input-field col s12">
-            <textarea placeholder=" " id="summary" class="materialize-textarea"></textarea>
-            <label for="summary">Summary</label>
-        </div>
-        <div class="input-field col s12">
-            <textarea placeholder=" " id="body" class="materialize-textarea"></textarea>
-            <label for="body">Body</label>
-        </div>
-        <div class="input-field col s6">
-            <input placeholder=" " id="edate" type="text" class="validate">
-            <label for="edate">Event Date</label>
-        </div>
-        <div class="input-field col s6">
-            <input placeholder=" " id="edate" type="text" class="validate">
-            <label for="edate">Event Date 2</label>
-        </div>
-        <div class="input-field col s6">
-            <input placeholder=" " id="etime" type="text" class="validate">
-            <label for="etime">Event Time</label>
-        </div>
-        <div class="input-field col s6">
-            <input placeholder=" " id="elocation" type="text" class="validate">
-            <label for="elocation">Location</label>
-        </div>
-        <div class="input-field col s12">
-            <textarea placeholder=" " id="ProjectOrJobDescription" class="materialize-textarea"></textarea>
-            <label for="ProjectOrJobDescription">Project or Job Description</label>
-        </div>
-        <div class="input-field col s12">
-            <textarea placeholder=" " id="ProjectOrJobCrowd" class="materialize-textarea"></textarea>
-            <label for="ProjectOrJobCrowd">Project or Job Crowd</label>
-        </div>
-        <div class="input-field col s6">
-            <input placeholder=" " id="city" type="text" class="validate">
-            <label for="city">City</label>
-        </div>
-        <div class="input-field col s6">
-            <input placeholder=" " id="collegeBuilding" type="text" class="validate">
-            <label for="collegeBuilding">collegeBuilding</label>
-        </div>
-        <p>
-            <input type="checkbox" id="hasMoney"/>
-            <label for="hasMoney">Job hasMoney</label>
-        </p>
-        <p>
-            <input type="checkbox" id="isHackathon"/>
-            <label for="isHackathon">isHackathon</label>
-        </p>
-        <p>
-            <input type="checkbox" id="isOther"/>
-            <label for="isOther">isOther</label>
-        </p>
-        <p>
-            <input type="checkbox" id="isSchool"/>
-            <label for="isSchool">isSchool</label>
-        </p>
-    </div>
-    <div class="modal-footer">
-        <a id="cancel" href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Disagree</a>
-        <a id="addupdate" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div>
-</div>
-
-<div id="modal2" class="modal">
-    <div class="modal-content">
-        <h4 id="mtitle"></h4>
-    </div>
-    <div class="modal-footer">
-        <a id="cancel" href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Disagree</a>
-        <a id="addupdate" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div>
-</div>
-
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="https://www.parsecdn.com/js/parse-latest.js"></script>
-<script type="text/javascript" src="js/materialize.min.js"></script>
-<script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
 </body>
+
 </html>
