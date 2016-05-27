@@ -55,7 +55,6 @@ firebase.database().ref('posts').on('value', function(snapshot) {
 
 function loadTutors() { // Loads the tutors into the website.
     firebase.database().ref('tutors').on('value', function (snapshot) {
-        $("#tutoring").append('<br><br><div class="z-depth-5 card-panel"><h4>List of Tutors</h4></div><div id="rtutors"></div>'); // Appends the html where the tutors will be added to the website.
         var data = snapshot.val();
         var text = "";
         for (tutor in data)
