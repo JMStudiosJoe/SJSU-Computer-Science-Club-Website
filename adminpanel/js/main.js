@@ -29,7 +29,7 @@ $(document).ready(function() { // Firebase template code to manage authenticatio
                 refresh();
             });
         } else {
-            signOut();
+            signout();
         }
     }, function(error) {
         signout();
