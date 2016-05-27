@@ -29,6 +29,7 @@ $(document).ready(function() { // Firebase template code to manage authenticatio
                 refresh();
             });
         } else {
+            alert("You're not allowed here. GTFO, Bitch.");
             signout();
         }
     }, function(error) {
