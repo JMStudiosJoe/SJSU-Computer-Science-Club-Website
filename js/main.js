@@ -72,28 +72,28 @@ function cleanUp() { // Clean all posts to remove all the empty and invalid data
     }); //All images that are empty are removed
     $(".card-content").each(function (index) {
         del = 0;
-        if ($(this).children('h4').html() == "Invalid Data") {
+        if ($(this).children('h4').html() == "") {
             $(this).children('h4').hide();
             del++;
         }
-        if ($(this).children('h5').html() == "Invalid Data") {
+        if ($(this).children('h5').html() == "") {
             $(this).children('h5').hide();
             del++;
         }
-        if ($(this).children('p').html() == "Invalid Data") {
+        if ($(this).children('p').html() == "") {
             $(this).children('p').hide();
             del++;
         }
         if (del > 2)
             $(this).hide();
-    }); //Delete the card content if all elements have invalid data
+    }); //Delete the card content if all elements have nothing
     $(".card-action").each(function (index) {
         del = 0;
         if ($(this).children('h5').children('a').attr("href") == "#") {
             del++;
             $(this).children('h5').hide();
         }
-        if ($(this).children('p').html() == "Invalid Data") {
+        if ($(this).children('p').html() == "") {
             del++;
             $(this).children('p').hide();
         }

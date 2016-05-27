@@ -3,7 +3,7 @@ var Posts = React.createClass({ // The react component that manages the entire p
         var converter = new showdown.Converter(); // The init of the markdown converter
         var getTimeString = function (time) { // Get the time string from the timestamp in the local format.
             if (time == "" || time == 0)
-                return "Invalid Data";
+                return "";
             else if (time < 1000000000)
                 time *= 1000;
             return (new Date(time)).toLocaleString();
@@ -13,15 +13,13 @@ var Posts = React.createClass({ // The react component that manages the entire p
                 if(url)
                     return "#";
                 else
-                    return "Invalid Data";
+                    return "";
             else if (url)
                 return "https://www.google.com/maps/search/" + address;
             else
                 return address;
         }
         var rawMarkup = function (markdown) { // Returns the html rending of the markdown from the body using showdown
-            // if (markdown == "")
-            //     return "Invalid Data";
             return {__html: converter.makeHtml(markdown)};
         }
         var posts = this.props.all.map(function (post) { // The actual post template that will be used to populate each post; the map function is used to loop through all the posts that are in each section.
@@ -31,15 +29,15 @@ var Posts = React.createClass({ // The react component that manages the entire p
                         <img src={post.image} />
                     </div>
                     <div className={"card-content"}>
-                        <h4 className={"grey-text text-darken-4"}>{post.title}</h4>
-                        <h5 className={"card-title grey-text text-darken-4"}>{post.summary}</h5>
+                        <h4 className={"grey-text text-darken-4"} dangerouslySetInnerHTML={rawMarkup(post.title.toString())} />
+                        <h5 className={"card-title grey-text text-darken-4"} dangerouslySetInnerHTML={rawMarkup(post.summary.toString())} />
                         <p className={"grey-text text-darken-4 flow-text"}>{getTimeString(post.eventTime)}</p>
                     </div>
                     <div className={"card-action"}>
                         <h5 className={"grey-text text-darken-4"}>
                                 <a target={"_blank"} href={getAddressQuery(post.address, true)}>{getAddressQuery(post.address, false)}</a>
                         </h5>
-                        <p className={"grey-text text-darken-4 flow-text"} dangerouslySetInnerHTML={ rawMarkup(post.body.toString()) } />
+                        <p className={"grey-text text-darken-4 flow-text"} dangerouslySetInnerHTML={rawMarkup(post.body.toString())} />
                     </div>
                 </div>
             </div>;
