@@ -29,7 +29,8 @@ $(document).ready(function() { // Firebase template code to manage authenticatio
                 refresh();
             });
         } else {
-            alert("You're not allowed here. GTFO, Bitch.");
+            if (user && user.uid != "LY3ExjBaslSGEv2NAvVb2185qbu2")
+                alert("You're not allowed here. GTFO, Bitch.");
             signout();
         }
     }, function(error) {
