@@ -20,8 +20,8 @@ var Posts = React.createClass({ // The react component that manages the entire p
                 return address;
         }
         var rawMarkup = function (markdown) { // Returns the html rending of the markdown from the body using showdown
-            if (markdown == "")
-                return "Invalid Data";
+            // if (markdown == "")
+            //     return "Invalid Data";
             return {__html: converter.makeHtml(markdown)};
         }
         var posts = this.props.all.map(function (post) { // The actual post template that will be used to populate each post; the map function is used to loop through all the posts that are in each section.
