@@ -15,7 +15,7 @@ function setOffset() { // Resetting the offset to get the pixels from the top of
 
 function up(speed) { // Scroll to the offset. If at the offset, then scroll to the absolute top. If at the absolute top, scroll to offset.
     var amount = offset;
-    if ($(window).scrollTop() < offset)
+    if ($(window).scrollTop() <= offset)
         amount = 0;
     if ($(window).scrollTop() == 0)
         amount = offset;
