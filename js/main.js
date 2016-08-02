@@ -109,6 +109,22 @@ function cleanUp() { // Clean all posts to remove all the empty and invalid data
     $(document.links).filter(function () {
         return this.hostname != window.location.hostname;
     }).attr('target', '_blank'); // All links that don't refer to the website will be opened in a new tab.
+    addDisqus();
+}
+
+function addDisqus() {
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = 'http://sjsucsclub.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
 }
 
 /*=================================================================================
