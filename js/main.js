@@ -153,12 +153,11 @@ function addFullCalendar() {
         events: 'sjsu.csclubpresident@gmail.com',
         eventClick: function (event) {
             console.log(event);
-            Materialize.toast(event.title, 10000, 'rounded');
-            Materialize.toast(event.location, 10000, 'rounded');
-            Materialize.toast(event.description, 10000, 'rounded');
-            Materialize.toast("<a href='"+event.url+"' target='_blank'>More Details</a>", 10000, 'rounded');
-            Materialize.toast(moment(event.start._i).format("hh:mm:ss a"), 10000, 'rounded');
-            Materialize.toast(moment(event.end._i).format("hh:mm:ss a"), 10000, 'rounded');
+            Materialize.toast(event.title+", at "+event.location+" from "+moment(event.start._i).format("hh:mm:ss a")+" to "+moment(event.end._i).format("hh:mm:ss a")+".", 10000, 'rounded');
+            if(event.description != "")
+                Materialize.toast("<a href='" + event.url + "' target='_blank'>More Details: " + event.description + "</a>", 10000, 'rounded');
+            else
+                Materialize.toast("<a href='" + event.url + "' target='_blank'>More Details</a>", 10000, 'rounded');
             return false;
         }
     });
