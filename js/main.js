@@ -158,7 +158,11 @@ function addFullCalendar() {
             else
                 Materialize.toast("<a href='" + event.url + "' target='_blank'>More Details</a>", 10000, 'rounded');
             return false;
-        }
+        },
+        editable: false,
+        handleWindowResize: true,
+        displayEventTime: true,
+        header: true
     });
     window.setInterval(function () {
         $('#calendar').fullCalendar('refetchEvents');
