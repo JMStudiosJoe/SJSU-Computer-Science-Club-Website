@@ -143,7 +143,7 @@ function addDisqus() {
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
-    window.setInterval(addFullCalendar, 1000);
+    addFullCalendar
 }
 
 function addFullCalendar() {
@@ -156,6 +156,9 @@ function addFullCalendar() {
             return false;
         }
     });
+    window.setInterval(function () {
+        $('#calendar').fullCalendar('refetchEvents');
+    }, 1000);
 }
 
 /*=================================================================================
