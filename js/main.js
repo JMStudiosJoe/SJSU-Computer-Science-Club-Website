@@ -147,6 +147,7 @@ function addDisqus() {
 }
 
 function addFullCalendar() {
+    console.log("Adding Full Calendar...");
     $('#calendar').fullCalendar({
         googleCalendarApiKey: 'AIzaSyAVUgKw_a2ObOmApl0qcNMmE0pKmK91fgs',
         events: 'sjsu.csclubpresident@gmail.com',
