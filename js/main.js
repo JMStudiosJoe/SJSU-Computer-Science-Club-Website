@@ -163,11 +163,7 @@ function addFullCalendar() {
         handleWindowResize: true,
         displayEventTime: true,
         header: true,
-        defaultView: 'agendaWeek',
-        allDayText: 'All Day Events',
-        columnFormat: {
-            week: 'ddd'
-        }
+        allDayText: 'All Day Events'
     });
     window.setInterval(function () {
         $('#calendar').fullCalendar('refetchEvents');
