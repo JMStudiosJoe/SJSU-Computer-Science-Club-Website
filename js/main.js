@@ -62,13 +62,6 @@ function getUrlParameter(sParam) {
 $(document).ready(function(){
     if (getUrlParameter('sub') == "true")
         Materialize.toast("Thank you for contacting us! We'll get back to you as soon as we can!", 10000, 'rounded');
-    $('#calendar').fullCalendar({
-        googleCalendarApiKey: 'AIzaSyAVUgKw_a2ObOmApl0qcNMmE0pKmK91fgs',
-        events: 'sjsu.csclubpresident@gmail.com',
-        eventClick: function(event) {
-            console.log(event);
-        }
-    });
 });
 
 /* =============== The Jquery Way of Loading Posts ================
@@ -150,6 +143,17 @@ function addDisqus() {
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
+    addFullCalendar();
+}
+
+function addFullCalendar() {
+    $('#calendar').fullCalendar({
+        googleCalendarApiKey: 'AIzaSyAVUgKw_a2ObOmApl0qcNMmE0pKmK91fgs',
+        events: 'sjsu.csclubpresident@gmail.com',
+        eventClick: function(event) {
+            console.log(event);
+        }
+    });
 }
 
 /*=================================================================================
