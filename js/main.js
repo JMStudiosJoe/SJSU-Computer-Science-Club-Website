@@ -152,6 +152,7 @@ function addFullCalendar() {
         events: 'sjsu.csclubpresident@gmail.com',
         eventClick: function(event) {
             console.log(event);
+            return;
         }
     });
 }

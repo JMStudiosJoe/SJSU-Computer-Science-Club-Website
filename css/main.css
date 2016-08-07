@@ -60,3 +60,11 @@ canvas {
 .collection {
     font-size: 1.125rem;
 }
+
+div#calendar {
+    font-size: large;
+}
+
+div#calendar h2 {
+    font-size: xx-large;
+}
