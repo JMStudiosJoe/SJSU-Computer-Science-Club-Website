@@ -161,7 +161,7 @@ function addFullCalendar() {
         },
         editable: false,
         handleWindowResize: true,
-        header: true
+        displayEventTime: true
     });
     window.setInterval(function () {
         $('#calendar').fullCalendar('refetchEvents');
