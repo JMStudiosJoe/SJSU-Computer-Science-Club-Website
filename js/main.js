@@ -161,7 +161,6 @@ function addFullCalendar() {
         },
         editable: false,
         handleWindowResize: true,
-        displayEventTime: true,
         header: true
     });
     window.setInterval(function () {
