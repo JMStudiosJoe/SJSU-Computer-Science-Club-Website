@@ -143,7 +143,7 @@ function addDisqus() {
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
-    addFullCalendar
+    addFullCalendar();
 }
 
 function addFullCalendar() {
