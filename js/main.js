@@ -147,14 +147,13 @@ function addDisqus() {
 }
 
 function addFullCalendar() {
-    console.log("Adding Full Calendar...");
     $('#calendar').fullCalendar({
         googleCalendarApiKey: 'AIzaSyAVUgKw_a2ObOmApl0qcNMmE0pKmK91fgs',
         events: 'sjsu.csclubpresident@gmail.com',
         eventClick: function (event) {
             console.log(event);
             Materialize.toast(event.title+", at "+event.location+" from "+moment(event.start._i).format("hh:mm:ss a")+" to "+moment(event.end._i).format("hh:mm:ss a")+".", 10000, 'rounded');
-            if(event.description != "")
+            if(event.description != undefined)
                 Materialize.toast("<a href='" + event.url + "' target='_blank'>More Details: " + event.description + "</a>", 10000, 'rounded');
             else
                 Materialize.toast("<a href='" + event.url + "' target='_blank'>More Details</a>", 10000, 'rounded');
