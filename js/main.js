@@ -158,6 +158,15 @@ function addFullCalendar() {
             else
                 Materialize.toast("<a href='" + event.url + "' target='_blank'>More Details</a>", 10000, 'rounded');
             return false;
+        },
+        editable: false,
+        handleWindowResize: true,
+        displayEventTime: true,
+        header: true,
+        defaultView: 'agendaWeek',
+        allDayText: 'All Day Events',
+        columnFormat: {
+            week: 'ddd'
         }
     });
     window.setInterval(function () {
