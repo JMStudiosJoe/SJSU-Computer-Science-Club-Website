@@ -148,6 +148,12 @@ function addDisqus() {
 
 function addFullCalendar() {
     $('#calendar').fullCalendar({
+        // theme: true,
+        header: {
+            left: 'prev,next today',
+            center: 'title'
+            ,right: 'month,basicWeek,basicDay'
+        },
         googleCalendarApiKey: 'AIzaSyAVUgKw_a2ObOmApl0qcNMmE0pKmK91fgs',
         events: 'sjsu.csclubpresident@gmail.com',
         eventClick: function (event) {
