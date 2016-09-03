@@ -1,5 +1,7 @@
 var offset; // The number of pixels from the top of the screen to the top of the tabs navigation bar. Used to determine when the bar should become fixed.
-$(window).resize(function () { setOffset(); }); // The offset is reset every time the screen resizes, since the logo and fonts change size..
+$(window).resize(function() {
+    setOffset();
+}); // The offset is reset every time the screen resizes, since the logo and fonts change size..
 
 function scrollTo(id) { // Added in proper scrolling to tool.
     $('html, body').animate({
@@ -59,7 +61,7 @@ function getUrlParameter(sParam) {
     return "";
 };
 
-$(document).ready(function(){
+$(document).ready(function() {
     if (getUrlParameter('sub') == "true")
         Materialize.toast("Thank you for contacting us! We'll get back to you as soon as we can!", 10000, 'rounded');
 });
@@ -78,7 +80,7 @@ firebase.database().ref('posts').on('value', function(snapshot) {
 */
 
 function loadTutors() { // Loads the tutors into the website.
-    firebase.database().ref('tutors').on('value', function (snapshot) {
+    firebase.database().ref('tutors').on('value', function(snapshot) {
         var data = snapshot.val();
         var text = "";
         for (tutor in data)
@@ -91,10 +93,10 @@ function loadTutors() { // Loads the tutors into the website.
 function cleanUp() { // Clean all posts to remove all the empty and invalid data sections.
     var del;
     $(".card-image").each(function(index) {
-        if($(this).children('img').attr("src").indexOf("empty") == 0)
+        if ($(this).children('img').attr("src").indexOf("empty") == 0)
             $(this).hide();
     }); //All images that are empty are removed
-    $(".card-content").each(function (index) {
+    $(".card-content").each(function(index) {
         del = 0;
         if ($(this).children('h4').html() == "") {
             $(this).children('h4').hide();
@@ -111,7 +113,7 @@ function cleanUp() { // Clean all posts to remove all the empty and invalid data
         if (del > 2)
             $(this).hide();
     }); //Delete the card content if all elements have nothing
-    $(".card-action").each(function (index) {
+    $(".card-action").each(function(index) {
         del = 0;
         if ($(this).children('h5').children('a').attr("href") == "#") {
             del++;
@@ -124,7 +126,7 @@ function cleanUp() { // Clean all posts to remove all the empty and invalid data
         if (del > 1)
             $(this).hide();
     }); //Delete the card action if all elements have invalid data
-    $(document.links).filter(function () {
+    $(document.links).filter(function() {
         return this.hostname != window.location.hostname;
     }).attr('target', '_blank'); // All links that don't refer to the website will be opened in a new tab.
     addDisqus();
@@ -138,7 +140,8 @@ function addDisqus() {
     };
     */
     (function() {
-        var d = document, s = d.createElement('script');
+        var d = document,
+            s = d.createElement('script');
         s.src = 'http://sjsucsclub.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
@@ -151,15 +154,15 @@ function addFullCalendar() {
         // theme: true,
         header: {
             left: 'prev,next today',
-            center: 'title'
-            ,right: 'month,basicWeek,basicDay'
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
         },
         googleCalendarApiKey: 'AIzaSyAVUgKw_a2ObOmApl0qcNMmE0pKmK91fgs',
         events: 'sjsu.csclubpresident@gmail.com',
-        eventClick: function (event) {
+        eventClick: function(event) {
             console.log(event);
-            Materialize.toast(event.title+", at "+event.location+" from "+moment(event.start._i).format("hh:mm:ss a")+" to "+moment(event.end._i).format("hh:mm:ss a")+".", 10000, 'rounded');
-            if(event.description != undefined)
+            Materialize.toast(event.title + ", at " + event.location + " from " + moment(event.start._i).format("hh:mm:ss a") + " to " + moment(event.end._i).format("hh:mm:ss a") + ".", 10000, 'rounded');
+            if (event.description != undefined)
                 Materialize.toast("<a href='" + event.url + "' target='_blank'>More Details: " + event.description + "</a>", 10000, 'rounded');
             else
                 Materialize.toast("<a href='" + event.url + "' target='_blank'>More Details</a>", 10000, 'rounded');
@@ -167,9 +170,13 @@ function addFullCalendar() {
         },
         editable: false,
         handleWindowResize: true,
-        displayEventTime: true
+        displayEventTime: true,
+        minTime: '11:30:00',
+        maxTime: '20:00:00',
+        // columnFormat: { week: 'ddd' },
+        allDayText: 'All Day'
     });
-    window.setInterval(function () {
+    window.setInterval(function() {
         $('#calendar').fullCalendar('refetchEvents');
     }, 1000);
 }
