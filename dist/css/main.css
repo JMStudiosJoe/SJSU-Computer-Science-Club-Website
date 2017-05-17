@@ -1,5 +1,6 @@
 a, .card .card-action a {
     text-transform: none;
+    min-width: 500px;
 }
 
 #logo {
